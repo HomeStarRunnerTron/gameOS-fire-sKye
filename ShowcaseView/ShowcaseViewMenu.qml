@@ -442,7 +442,11 @@ id: root
                 property bool selected: ListView.isCurrentItem && platformlist.focus
                 width: (root.width - globalMargin * 2) / 7.0
                 height: width * settings.WideRatio
-                color: selected ? theme.accent : theme.secondary
+                // added gradient
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: selected ? theme.gradientaccentstart : theme.gradientend }
+                    GradientStop { position: 0.9; color: selected ? theme.gradientaccentend : theme.gradientstart }
+                }
                 scale: selected ? 1.1 : 1
                 Behavior on scale { NumberAnimation { duration: 100 } }
                 border.width: vpx(1)
