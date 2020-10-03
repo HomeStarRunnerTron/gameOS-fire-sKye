@@ -67,7 +67,7 @@ id: infocontainer
             font.pixelSize: vpx(16)
             font.family: subtitleFont.name
             font.bold: true
-            color: theme.accent
+            color: theme.textgrey
         }
 
         Text {
@@ -107,7 +107,7 @@ id: infocontainer
             font.pixelSize: vpx(16)
             font.family: subtitleFont.name
             font.bold: true
-            color: theme.accent
+            color: theme.textgrey
         }
 
         Text {
@@ -146,7 +146,7 @@ id: infocontainer
             font.pixelSize: vpx(16)
             font.family: subtitleFont.name
             font.bold: true
-            color: theme.accent
+            color: theme.textgrey
         }
 
         Text {
@@ -184,7 +184,7 @@ id: infocontainer
             text: gameData && (gameData.summary || gameData.description) ? gameData.description || gameData.summary : "No description available"
             font.pixelSize: vpx(16)
             font.family: bodyFont.name
-            color: theme.text
+            color: theme.textgreylight
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
         }
