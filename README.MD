@@ -3,8 +3,8 @@
 ![gameOS Pegasus theme](https://i.imgur.com/dIqVgG0.png)
 ![gameOS Pegasus theme](https://i.imgur.com/b5lIg5l.png)
 ![gameOS Pegasus theme](https://i.imgur.com/LtJlNrr.png)
-![gameOS Pegasus theme](https://i.imgur.com/1ZwJMKe.png)
-![gameOS Pegasus theme](https://i.imgur.com/xyQ8cvG.png)
+![gameOS Pegasus theme](https://i.imgur.com/sweUEwJ.png)
+![gameOS Pegasus theme](https://i.imgur.com/jM6QTi7.png)
 
 
 ## gameOS - Fire theme variant for Pegasus Frontend
