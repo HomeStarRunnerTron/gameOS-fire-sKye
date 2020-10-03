@@ -65,7 +65,7 @@ id: root
 
             font.family: subtitleFont.name
             font.pixelSize: vpx(16)
-            font.bold: true
+            font.bold: false
             color: theme.text
             //opacity: selected ? 1 : 0.2
             visible: text !== ""
