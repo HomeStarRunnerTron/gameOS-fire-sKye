@@ -229,6 +229,15 @@ id: root
         visible: blurBG
     }
 
+    // Dark Hero
+    Image {
+    id: darkhero
+
+        anchors.fill: parent
+        source: "../assets/images/background.jpg"
+        asynchronous: true
+        opacity: 0.5 /*darken hero*/
+    }
     // Scanlines
     Image {
     id: scanlines
@@ -390,7 +399,7 @@ id: root
         id: logobg
 
             anchors.fill: platformlogo
-            source: "../assets/images/gradient.png"
+            source: "../assets/images/gradient_white.png"
             asynchronous: true
             visible: false
         }
