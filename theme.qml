@@ -186,14 +186,19 @@ id: root
     // Theme settings
     property var theme: {
         return {
-            main:           "#1d253d",
-            secondary:      "#202a44",
-            accent:         "#f00980",
-            highlight:      "#f00980",
-            text:           "#ececec",
-            button:         "#f00980",
-            gradientstart:  "#000d111d",
-            gradientend:    "#FF0d111d"
+            main:           "#12151a",
+            secondary:      "#12151a",
+            accent:         "#eba020",
+            highlight:      "#eba020",
+            text:           "#ffffff",
+            textgreylight:  "#dbdbdb",
+            textgrey:       "#6f6f6f",
+            textblack:      "#1b2929",            
+            button:         "#eba020",
+            gradientstart:  "#0012151a",
+            gradientend:    "#FF12151a",
+            gradientaccentstart:  "#f7941d",
+            gradientaccentend:    "#fbb748"
         }
     }
 
