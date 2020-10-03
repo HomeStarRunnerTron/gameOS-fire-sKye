@@ -11,3 +11,4 @@
 *.includes
 *.code-workspace
 .vs/
+assets/fonts/.DS_Store
