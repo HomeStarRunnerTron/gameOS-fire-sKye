@@ -151,11 +151,11 @@ id: root
             asynchronous: true
         }*/
 
-       /* Rectangle {
+        Rectangle {
             anchors.fill: parent
             color: "black"
             opacity: 0.5
-        }*/
+        }
 
         Video {
         id: videocomponent
@@ -333,13 +333,6 @@ id: root
                         Behavior on opacity { PropertyAnimation { duration: 150; easing.type: Easing.OutQuart; easing.amplitude: 2.0; easing.period: 1.5 } }
                     }
 
-                    Rectangle {
-                        
-                        anchors.fill: parent
-                        color: "black"
-                        opacity: 0.3
-    
-                    }
                     Image {
                     id: specialLogo
 
@@ -453,7 +446,7 @@ id: root
                 scale: selected ? 1.1 : 1
                 Behavior on scale { NumberAnimation { duration: 100 } }
                 border.width: vpx(1)
-                border.color: "#10FFFFFF"
+                border.color: "#19FFFFFF"
 
                 anchors.verticalCenter: parent.verticalCenter
 
