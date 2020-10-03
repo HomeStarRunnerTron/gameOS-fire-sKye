@@ -23,7 +23,7 @@ IMPORTANT: You need to have the latest version of Pegasus installed (not the cur
 
 ## Version history
 
-v1.0
+v1.0.0
 - Initial release based on [gameOS Version 1.0.9](https://github.com/PlayingKarrde/gameOS/releases/tag/1.0.9)
 - Recoloured theme
 - Darkened hero areas so clear logos have better visibility
