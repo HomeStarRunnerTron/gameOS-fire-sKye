@@ -151,11 +151,11 @@ id: root
             asynchronous: true
         }*/
 
-        Rectangle {
+       /* Rectangle {
             anchors.fill: parent
             color: "black"
             opacity: 0.5
-        }
+        }*/
 
         Video {
         id: videocomponent
@@ -453,7 +453,7 @@ id: root
                 scale: selected ? 1.1 : 1
                 Behavior on scale { NumberAnimation { duration: 100 } }
                 border.width: vpx(1)
-                border.color: "#19FFFFFF"
+                border.color: "#10FFFFFF"
 
                 anchors.verticalCenter: parent.verticalCenter
 
