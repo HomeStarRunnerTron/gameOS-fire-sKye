@@ -329,10 +329,17 @@ id: root
                         
                         anchors.fill: parent
                         color: "black"
-                        opacity: featuredlist.focus ? 0 : 0.5
+                        opacity: featuredlist.focus ? 0.5 : 0.8
                         Behavior on opacity { PropertyAnimation { duration: 150; easing.type: Easing.OutQuart; easing.amplitude: 2.0; easing.period: 1.5 } }
                     }
 
+                    Rectangle {
+                        
+                        anchors.fill: parent
+                        color: "black"
+                        opacity: 0.3
+    
+                    }
                     Image {
                     id: specialLogo
 
@@ -455,9 +462,13 @@ id: root
 
                     anchors.fill: parent
                     anchors.centerIn: parent
-                    anchors.margins: vpx(15)
+                    /*anchors.margins: vpx(15)*/
+                    anchors.topMargin: vpx(35)
+                    anchors.bottomMargin: vpx(35)
+                    anchors.leftMargin: vpx(22)
+                    anchors.rightMargin: vpx(22)
                     source: "../assets/images/logospng/" + Utils.processPlatformName(modelData.shortName) + ".png"
-                    sourceSize { width: 256; height: 128 }
+                    sourceSize { width: 128; height: 64 }
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     smooth: true
@@ -471,7 +482,7 @@ id: root
 
                     text: modelData.name
                     anchors { fill: parent; margins: vpx(10) }
-                    color: theme.text
+                    color: "white"
                     opacity: selected ? 1 : 0.2
                     Behavior on opacity { NumberAnimation { duration: 100 } }
                     font.pixelSize: vpx(18)
