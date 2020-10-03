@@ -29,3 +29,4 @@ v1.0
 - Darkened hero areas so clear logos have better visibility
 - Added gradients to buttons
 - Changed platform logos to white
+- Fonts changed
