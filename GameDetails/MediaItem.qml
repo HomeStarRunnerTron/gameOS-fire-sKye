@@ -87,7 +87,7 @@ id: root
         id: iconFill
 
             anchors.fill: parent
-            source: "../assets/images/gradient.png"
+            source: "../assets/images/gradient_grey.png"
             fillMode: Image.PreserveAspectCrop
             visible: false
         }
