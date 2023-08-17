@@ -23,6 +23,7 @@ import "../utils.js" as Utils
 
 FocusScope {
 id: root
+    
     // While not necessary to do it here, this means we don't need to change it in both
     // touch and gamepad functions each time
     function gameActivated() {
@@ -31,15 +32,25 @@ id: root
     }
 
     property var sortedGames;
+    property var sortedGamesRedo;
+    property var charReverse;
+    property var charCode;
+    
     property bool isLeftTriggerPressed: false;
     property bool isRightTriggerPressed: false;
+    property bool reselecting: false;
 
-    function nextChar(c, modifier) {
+    function prevChar(c) {
+        charReverse = String.fromCharCode(c);
+    }
+
+    function nextChar(c, modifier, order) {
+        reselecting = false;
         const firstAlpha = 97;
         const lastAlpha = 122;
-
-        var charCode = c.charCodeAt(0) + modifier;
-
+        
+        if (order == "ascending") {
+            charCode = c.charCodeAt(0) + modifier;
         if (modifier > 0) { // Scroll down
             if (charCode < firstAlpha || isNaN(charCode)) {
                 return 'a';
@@ -55,16 +66,57 @@ id: root
                 return 'z';
             }
         }
-
+        } else if (order == "descending") {
+            charCode = c.charCodeAt(0) - modifier;
+            var charCodeReverse = charCode - modifier;
+            prevChar(charCodeReverse);
+        if (modifier < 0) { // Scroll up
+            if (charCode < firstAlpha || isNaN(charCode)) {
+                return 'a';
+            }
+            if (charCode > lastAlpha) {
+                return '';
+            }
+        } else { // Scroll down
+            if (charCode == firstAlpha - 1) {
+                return '';
+            }
+            if (charCode < firstAlpha || charCode > lastAlpha || isNaN(charCode)) {
+                return 'z';
+            }
+        }
+        }
+        
         return String.fromCharCode(charCode);
     }
 
     function navigateToNextLetter(modifier) {
+        reselecting = false;
         if (isRightTriggerPressed || isLeftTriggerPressed) {
             return false;
         }
 
-        if (sortByFilter[sortByIndex].toLowerCase() != "title") {
+        if (sortByFilter[sortByIndex].toLowerCase() != "sortby") {
+            navigationErrorOpacityAnimator.running = false
+            navigationError.text = "Navigating by letter is only compatible on<br>Show All + Sort by Title without Search Terms.";
+            navigationOverlay2.opacity = 0.8;
+            navigationErrorOpacityAnimator.running = true
+            return false;
+        }
+        
+        if (showFavs == true) {
+            navigationErrorOpacityAnimator.running = false
+            navigationError.text = "Navigating by letter is only compatible on<br>Show All + Sort by Title without Search Terms.";
+            navigationOverlay2.opacity = 0.8;
+            navigationErrorOpacityAnimator.running = true
+            return false;
+        }
+        
+        if (searchTerm != "") {
+            navigationErrorOpacityAnimator.running = false
+            navigationError.text = "Navigating by letter is only compatible on<br>Show All + Sort by Title without Search Terms.";
+            navigationOverlay2.opacity = 0.8;
+            navigationErrorOpacityAnimator.running = true
             return false;
         }
 
@@ -73,16 +125,21 @@ id: root
             gamegrid.currentIndex = 0;
         }
         else {
-            // NOTE: We should be using the scroll proxy here, but this is significantly faster.
-            if (sortedGames == null) {
-                sortedGames = list.collection.games.toVarArray().map(g => g.title.toLowerCase()).sort((a, b) => a.localeCompare(b));
-            }
-
-            var currentGameTitle = sortedGames[currentIndex];
-            var currentLetter = currentGameTitle.toLowerCase().charAt(0);
-
+            
+            var currentGameTitle;
+            var currentLetter;
             const firstAlpha = 97;
             const lastAlpha = 122;
+            
+            if (orderBy === Qt.AscendingOrder) {
+                sortedGames = list.collection.games.toVarArray().map(g => g.sortBy.toLowerCase()).sort((a, b) => a.localeCompare(b));
+            } else if (orderBy === Qt.DescendingOrder) {
+                sortedGames = list.collection.games.toVarArray().map(g => g.sortBy.toLowerCase()).sort((a, b) => b.localeCompare(a));
+                sortedGamesRedo = list.collection.games.toVarArray().map(g => g.sortBy.toLowerCase()).sort((a, b) => a.localeCompare(b));
+            }
+
+            currentGameTitle = sortedGames[currentIndex];
+            currentLetter = currentGameTitle.toLowerCase().charAt(0);
 
             if (currentLetter.charCodeAt(0) < firstAlpha || currentLetter.charCodeAt(0) > lastAlpha) {
                 currentLetter = '';
@@ -93,7 +150,11 @@ id: root
 
             do {
                 do {
-                    nextLetter = nextChar(nextLetter, modifier);
+                    if (orderBy === Qt.AscendingOrder) {
+                        nextLetter = nextChar(nextLetter, modifier, "ascending");
+                    } else if (orderBy === Qt.DescendingOrder) {
+                        nextLetter = nextChar(nextLetter, modifier, "descending");
+                    }
 
                     if (currentLetter == nextLetter) {
                         break;
@@ -108,12 +169,53 @@ id: root
                         break;
                     }
                 } while (true)
-
-                nextIndex = sortedGames.findIndex(g => g.toLowerCase().localeCompare(nextLetter) >= 0);
+                if (orderBy === Qt.AscendingOrder) {
+                    nextIndex = sortedGames.findIndex(g => g.toLowerCase().localeCompare(nextLetter) >= 0);
+                } else if (orderBy === Qt.DescendingOrder) {
+                    if (modifier == +1) {
+                        nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare(currentLetter) >= 0);
+                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                    } else if (modifier == -1) {
+                        nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare(charReverse) >= 0);
+                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                    }
+                }
             } while(nextIndex === -1)
-
-            gamegrid.currentIndex = nextIndex;
-
+            
+            if (orderBy === Qt.AscendingOrder) {
+                gamegrid.currentIndex = nextIndex;
+            } else if (orderBy === Qt.DescendingOrder) {
+                if (nextIndex == sortedGames.length && modifier == -1) {
+                    if (charCode > lastAlpha) {
+                        nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare("a") >= 0);
+                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                        gamegrid.currentIndex = nextIndex;
+                    } else if (currentLetter == "") {
+                        nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare("b") >= 0);
+                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                        gamegrid.currentIndex = nextIndex;
+                    } else if (nextLetter == "a" && modifier == -1) {
+                        nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare("a") >= 0);
+                        nextIndex = (nextIndex - (sortedGames.length)+1)*-1;
+                        gamegrid.currentIndex = nextIndex;
+                    } else {
+                        gamegrid.currentIndex = 0;
+                        nextIndex = 0;
+                    }
+                } else if (nextIndex == sortedGames.length && modifier == +1) {
+                    gamegrid.currentIndex = 0;
+                    nextIndex = 0;
+                } else if (nextIndex == sortedGames.length && modifier == +1) {
+                    gamegrid.currentIndex = 0;
+                    nextIndex = 0;
+                } else if (nextIndex == sortedGames.length+1 && modifier == -1) {
+                    gamegrid.currentIndex = 0;
+                    nextIndex = 0;
+                } else {
+                    gamegrid.currentIndex = nextIndex;
+                }
+            }
+            
             nextLetter = sortedGames[nextIndex].toLowerCase().charAt(0);
             var nextLetterCharCode = nextLetter.charCodeAt(0);
             if (nextLetterCharCode < firstAlpha || nextLetterCharCode > lastAlpha) {
@@ -156,7 +258,7 @@ id: root
         Text {
         id: navigationLetter
             antialiasing: true
-            renderType: Text.NativeRendering
+            renderType: Text.QtRendering
             font.hintingPreference: Font.PreferNoHinting
             font.family: titleFont.name
             font.capitalization: Font.AllUppercase
@@ -172,6 +274,37 @@ id: root
 
                 target: navigationOverlay
                 from: navigationOverlay.opacity
+                to: 0;
+                duration: 500
+            }
+        }
+    }
+    
+    Rectangle {
+    id: navigationOverlay2
+        anchors.fill: parent;
+        color: theme.main
+        opacity: 0
+        z: 10
+
+        Text {
+        id: navigationError
+            antialiasing: true
+            renderType: Text.QtRendering
+            font.hintingPreference: Font.PreferNoHinting
+            font.family: titleFont.name
+            font.pixelSize: vpx(25)
+            color: "white"
+            anchors.centerIn: parent
+        }
+
+        SequentialAnimation {
+        id: navigationErrorOpacityAnimator
+            PauseAnimation { duration: 1250 }
+            OpacityAnimator {
+
+                target: navigationOverlay2
+                from: navigationOverlay2.opacity
                 to: 0;
                 duration: 500
             }
@@ -198,7 +331,12 @@ id: root
         Keys.onDownPressed: {
             sfxNav.play();
             gamegrid.focus = true;
-            gamegrid.currentIndex = 0;
+            if (gamegrid.currentIndex > -1) {
+                gamegrid.currentIndex = gamegrid.currentIndex + 1;
+                gamegrid.currentIndex = gamegrid.currentIndex - 1;
+            } else {
+                gamegrid.currentIndex = 0;
+            }
         }
     }
 
@@ -206,10 +344,16 @@ id: root
     id: gridContainer
 
         anchors {
-            top: header.bottom; topMargin: globalMargin
+            top: header.bottom; topMargin: 0
             left: parent.left; leftMargin: globalMargin
             right: parent.right; rightMargin: globalMargin
-            bottom: parent.bottom; bottomMargin: globalMargin
+            bottom: parent.bottom; bottomMargin: 0
+        }
+        
+        Rectangle {
+            width: parent.width
+            height: vpx(1)
+            z: 100
         }
 
         GridView {
@@ -239,15 +383,11 @@ id: root
 
             anchors {
                 top: parent.top; left: parent.left; right: parent.right;
-                bottom: parent.bottom; bottomMargin: helpMargin + vpx(40)
+                bottom: parent.bottom; bottomMargin: 0
             }
             cellWidth: width / numColumns
             cellHeight: ((showBoxes) ? cellWidth * cellHeightRatio : savedCellHeight) + titleMargin
-            preferredHighlightBegin: vpx(0)
-            preferredHighlightEnd: gamegrid.height - helpMargin - vpx(40)
-            highlightRangeMode: GridView.ApplyRange
             highlightMoveDuration: 200
-            highlight: highlightcomponent
             keyNavigationWraps: false
             displayMarginBeginning: cellHeight * 2
             displayMarginEnd: cellHeight * 2
@@ -314,6 +454,13 @@ id: root
                             modelData.favorite = !modelData.favorite;
                         }
                     }
+                    
+                    Component.onCompleted: {
+                        if (reselecting == true) {
+                            gamegrid.currentIndex = gamegrid.currentIndex + 1;
+                            gamegrid.currentIndex = gamegrid.currentIndex - 1;
+                        }
+                    }
                 }
             }
 
@@ -339,6 +486,21 @@ id: root
                     moveCurrentIndexUp();
                 }
             }
+            
+            Rectangle {
+                width: parent.width;
+                height: parent.height;
+                opacity: 0;
+                z:-1;
+                // Mouse/touch functionality
+                MouseArea {
+                    anchors.fill: parent
+                    onEntered: {reselecting = false; gamegrid.focus = true;}
+                    onExited: {reselecting = false; gamegrid.focus = true;}
+                    onClicked: {reselecting = false; gamegrid.focus = true;}
+                }
+            }
+            
             Keys.onDownPressed:     { sfxNav.play(); moveCurrentIndexDown() }
             Keys.onLeftPressed:     { sfxNav.play(); moveCurrentIndexLeft() }
             Keys.onRightPressed:    { sfxNav.play(); moveCurrentIndexRight() }
@@ -380,6 +542,9 @@ id: root
             event.accepted = true;
             if (gamegrid.focus) {
                 previousScreen();
+                gamegrid.currentIndex = 0;
+                sortedGames = null;
+                currentGame = null;
             } else {
                 gamegrid.focus = true;
             }
@@ -467,6 +632,32 @@ id: root
         if (focus) {
             currentHelpbarModel = gridviewHelpModel;
             gamegrid.focus = true;
+            if (currentGame == null) {
+                gamegrid.currentIndex = 0;
+                sortedGames = null;
+            } else if (orderBy === Qt.AscendingOrder && list.collection.games.toVarArray().findIndex(g => g === currentGame) != gamegrid.currentIndex) {
+                reselecting = true;
+                sortByIndex = 0;
+                showFavs = false;
+                if (currentGame.sortBy != undefined) {
+                    searchTerm = currentGame.title;
+                } else {
+                    searchTerm = currentGame.sortBy;
+                }
+                gamegrid.currentIndex = 0;
+                searchTerm = "";
+            } else if (orderBy === Qt.DescendingOrder && list.collection.games.toVarArray().reverse().findIndex(g => g === currentGame) != gamegrid.currentIndex) {
+                reselecting = true;
+                sortByIndex = 0;
+                showFavs = false;
+                if (currentGame.sortBy != undefined) {
+                    searchTerm = currentGame.title;
+                } else {
+                    searchTerm = currentGame.sortBy;
+                }
+                gamegrid.currentIndex = 0;
+                searchTerm = "";
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ id: root
     id: mostPlayedGames
 
         sourceModel: api.allGames
-        sorters: RoleSorter { roleName: "playCount"; sortOrder: Qt.DescendingOrder }
+        sorters: RoleSorter { roleName: "playTime"; sortOrder: Qt.DescendingOrder }
     }
 
     SortFilterProxyModel {
@@ -40,7 +40,7 @@ id: root
 
     property var collection: {
         return {
-            name:       "Most Played Games",
+            name:       "Most Time Spent",
             shortName:  "mostplayed",
             games:      gamesFiltered
         }

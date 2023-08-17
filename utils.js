@@ -304,18 +304,8 @@ function boxArt(data) {
     if (data.assets.boxFront.includes("/header.jpg")) 
       return steamBoxArt(data);
     else {
-      if (data.assets.boxFront != "")
-        return data.assets.boxFront;
-      else if (data.assets.poster != "")
-        return data.assets.poster;
-      else if (data.assets.banner != "")
-        return data.assets.banner;
-      else if (data.assets.tile != "")
-        return data.assets.tile;
-      else if (data.assets.cartridge != "")
-        return data.assets.cartridge;
-      else if (data.assets.logo != "")
-        return data.assets.logo;
+      if (data.assets.screenshots[0] != "")
+        return data.assets.screenshots[0];
     }
   }
   return "";
@@ -328,6 +318,18 @@ function logo(data) {
     else {
       if (data.assets.logo != "")
         return data.assets.logo;
+    }
+  }
+  return "";
+}
+
+function logocentered(data) {
+  if (data != null) {
+    if (data.assets.boxFront.includes("/header.jpg")) 
+      return steamLogo(data);
+    else {
+      if (data.assets.titlescreen != "")
+        return data.assets.titlescreen;
     }
   }
   return "";

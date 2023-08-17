@@ -60,7 +60,7 @@ id: root
     
     property var collection: {
         return {
-            name:       "All games",
+            name:       "Show All",
             shortName:  "allgames",
             games:      shuffle(gamesWithLimit)
         }

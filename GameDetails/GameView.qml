@@ -45,33 +45,18 @@ id: root
             return ""
         }
     }
-    
+
+    ListDeveloper { id: developerCollection; developer: game && game.developer ? game.developer : ""; max: 10 }
     ListPublisher { id: publisherCollection; publisher: game && game.publisher ? game.publisher : ""; max: 10 }
     ListGenre { id: genreCollection; genre: game ? game.genreList[0] : ""; max: 10 }
-
-    // Combine the video and the screenshot arrays into one
-    function mediaArray() {
-        let mediaList = [];
-        if (game && game.assets.video)
-            game.assets.videoList.forEach(v => mediaList.push(v));
-
-        if (game) {
-            game.assets.screenshotList.forEach(v => mediaList.push(v));
-            game.assets.backgroundList.forEach(v => mediaList.push(v));
-        }
-
-        return mediaList;
-    }
 
     // Reset the screen to default state
     function reset() {
         content.currentIndex = 0;
         menu.currentIndex = 0;
-        media.savedIndex = 0;
         list1.savedIndex = 0;
         list2.savedIndex = 0;
         screenshot.opacity = 1;
-        mediaScreen.opacity = 0;
         toggleVideo(true);
     }
 
@@ -85,21 +70,6 @@ id: root
             detailsOpacity = 1;
             toggleVideo(false);
         }
-    }
-
-    // Show/hide the media view
-    function showMedia(index) {
-        sfxAccept.play();
-        mediaScreen.mediaIndex = index;
-        mediaScreen.focus = true;
-        mediaScreen.opacity = 1;
-    }
-
-    function closeMedia() {
-        sfxBack.play();
-        mediaScreen.opacity = 0;
-        content.focus = true;
-        currentHelpbarModel = gameviewHelpModel;
     }
 
     onGameChanged: reset();
@@ -196,7 +166,6 @@ id: root
     id: screenshot
 
         anchors.fill: parent
-        asynchronous: true
         property int randoScreenshotNumber: {
             if (game && settings.GameRandomBackground === "Yes")
                 return Math.floor(Math.random() * game.assets.screenshotList.length);
@@ -235,7 +204,6 @@ id: root
 
         anchors.fill: parent
         source: "../assets/images/background.jpg"
-        asynchronous: true
         opacity: 0.5 /*darken hero*/
     }
     // Scanlines
@@ -257,9 +225,9 @@ id: root
             top: parent.top; //topMargin: vpx(70)
             left: parent.left; leftMargin: vpx(70)
         }
-        width: vpx(500)
-        height: vpx(450) + header.height
-        source: game ? Utils.logo(game) : ""
+        width: vpx(400)
+        height: vpx(480) + header.height
+        source: game ? Utils.logocentered(game) : ""
         fillMode: Image.PreserveAspectFit
         asynchronous: true
         opacity: (content.currentIndex !== 0 || detailsScreen.opacity !== 0) ? 0 : 1
@@ -408,10 +376,10 @@ id: root
         id: platformlogo
 
             anchors {
-                top: parent.top; topMargin: vpx(20)
-                bottom: parent.bottom; bottomMargin: vpx(20)
-                left: parent.left; leftMargin: globalMargin
+                top: parent.top; topMargin: vpx(10)
+                left: parent.left; leftMargin: vpx(20)
             }
+            height: vpx(60)
             fillMode: Image.PreserveAspectFit
             source: "../assets/images/logospng/" + Utils.processPlatformName(game.collections.get(0).shortName) + ".png"
             sourceSize { width: 256; height: 256 }
@@ -473,7 +441,7 @@ id: root
         Button { 
         id: button1 
 
-            text: "Play game"
+            text: "Launch"
             height: parent.height
             selected: ListView.isCurrentItem && menu.focus
             onHighlighted: { menu.currentIndex = ObjectModel.index; content.currentIndex = 0; }
@@ -561,60 +529,9 @@ id: root
             Keys.onRightPressed: { sfxNav.play(); incrementCurrentIndex() }
         }
 
-        HorizontalCollection {
-        id: media
-
-            width: root.width - vpx(70) - globalMargin
-            height: ((root.width - globalMargin * 2) / 6.0) + vpx(60)
-            title: "Media"
-            model: game ? mediaArray() : []
-            delegate: MediaItem {
-            id: mediadelegate
-
-                width: (root.width - globalMargin * 2) / 6.0
-                height: width
-                selected: ListView.isCurrentItem && media.ListView.isCurrentItem
-                mediaItem: modelData
-
-                onHighlighted: {
-                    sfxNav.play(); 
-                    media.currentIndex = index;
-                    content.currentIndex = media.ObjectModel.index;
-                }
-
-                onActivated: {
-                if (selected)
-                    showMedia(index);
-                else
-                {
-                    sfxNav.play(); 
-                    media.currentIndex = index;
-                    content.currentIndex = media.ObjectModel.index;
-                }
-            }
-            }
-            
-        }
-
-        // More by publisher
+        // More by developer
         HorizontalCollection {
         id: list1
-
-            property bool selected: ListView.isCurrentItem
-            focus: selected
-            width: root.width - vpx(70) - globalMargin
-            height: itemHeight + vpx(60)
-            itemWidth: (root.width - globalMargin * 2) / 4.0
-            itemHeight: itemWidth * settings.WideRatio
-
-            title: game ? "More games by " + game.publisher : ""
-            search: publisherCollection
-            onListHighlighted: { sfxNav.play(); content.currentIndex = list1.ObjectModel.index; }
-        }
-
-        // More in genre
-        HorizontalCollection {
-        id: list2
 
             property bool selected: ListView.isCurrentItem
             focus: selected
@@ -623,8 +540,41 @@ id: root
             itemWidth: (root.width - globalMargin * 2) / 8.0
             itemHeight: itemWidth / settings.TallRatio
 
-            title: game ? "More " + game.genreList[0].toLowerCase() + " games" : ""
-            search: genreCollection
+            title: if (game) {
+                if (game.extra.developernosort != null) {
+                    "By " + game.extra.developernosort;
+                } else {
+                    "By " + game.developer;
+                }
+            } else {
+                ""
+            }
+            search: developerCollection
+            onListHighlighted: { sfxNav.play(); content.currentIndex = list1.ObjectModel.index; }
+        }
+        
+        // More by publisher
+        HorizontalCollection {
+        id: list2
+
+            property bool selected: ListView.isCurrentItem
+            focus: selected
+            visible: game.developer != game.publisher
+            width: root.width - vpx(70) - globalMargin
+            height: itemHeight + vpx(60)
+            itemWidth: (root.width - globalMargin * 2) / 8.0
+            itemHeight: itemWidth / settings.TallRatio
+
+            title: if (game) {
+                if (game.extra.publishernosort != null) {
+                    "By " + game.extra.publishernosort;
+                } else {
+                    "By " + game.publisher;
+                }
+            } else {
+                ""
+            }
+            search: publisherCollection
             onListHighlighted: { sfxNav.play(); content.currentIndex = list2.ObjectModel.index; }
         }
         
@@ -656,20 +606,8 @@ id: root
             }
         }
         keyNavigationWraps: true
-        Keys.onUpPressed: { sfxNav.play(); decrementCurrentIndex() }
-        Keys.onDownPressed: { sfxNav.play(); incrementCurrentIndex() }
-    }
-
-    MediaView {
-    id: mediaScreen
-        
-        anchors.fill: parent
-        Behavior on opacity { NumberAnimation { duration: 100 } }
-        visible: opacity != 0
-
-        mediaModel: mediaArray();
-        mediaIndex: media.currentIndex != -1 ? media.currentIndex : 0
-        onClose: closeMedia();
+        Keys.onUpPressed: { sfxNav.play(); if (game.publisher == game.developer && content.currentIndex == 0) { content.currentIndex = 1; } else { decrementCurrentIndex() } }
+        Keys.onDownPressed: { sfxNav.play(); if (game.publisher == game.developer && content.currentIndex == 1) { content.currentIndex = 0; } else { incrementCurrentIndex() } }
     }
 
     // Input handling
@@ -677,10 +615,7 @@ id: root
         // Back
         if (api.keys.isCancel(event) && !event.isAutoRepeat) {
             event.accepted = true;
-            if (mediaScreen.visible)
-                closeMedia();
-            else
-                previousScreen();
+            previousScreen();
         }
         // Filters
         if (api.keys.isFilters(event) && !event.isAutoRepeat) {
