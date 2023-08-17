@@ -42,8 +42,3 @@ Theme fork of a [theme fork](https://github.com/jimbob4000/gameOS) (I am just a 
 ## Installation
 
 Download the release ZIP, unzip, then move the gameOS-fire-sKye folder into the pegasus-frontend themes folder. You can follow the instructions [here](http://pegasus-frontend.org/docs/user-guide/installing-themes/) for that part.
-
-## Version history
-
-v1.0.0
-- I deed eet!
