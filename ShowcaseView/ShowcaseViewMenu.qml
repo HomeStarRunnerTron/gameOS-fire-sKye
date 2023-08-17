@@ -75,13 +75,13 @@ id: root
             case "Favorites":
                 collection.search = listFavorites;
                 break;
-            case "Recently Played":
+            case "Recently Launched":
                 collection.search = listLastPlayed;
                 break;
-            case "Most Played":
+            case "Most Time Spent":
                 collection.search = listMostPlayed;
                 break;
-            case "Recommended":
+            case "Randomly Picked":
                 collection.search = listRecommended;
                 break;
             case "Top by Publisher":
@@ -106,7 +106,7 @@ id: root
     }
 
     property string randoPub: (Utils.returnRandom(Utils.uniqueValuesArray('publisher')) || '')
-    property string randoGenre: (Utils.returnRandom(Utils.uniqueValuesArray('genreList'))[0] || '').toLowerCase()
+    property string randoGenre: (Utils.returnRandom(Utils.uniqueValuesArray('genreList'))[0] || '')
 
     property bool ftue: featuredCollection.games.count == 0
 
@@ -135,12 +135,14 @@ id: root
                 case 2:
                     return 0.1;
                 case -1:
-                    return 0.3;
+                    return ftueContainer.opacity;
                 default:
                     return 0
             }
         }
         Behavior on opacity { PropertyAnimation { duration: 1000; easing.type: Easing.OutQuart; easing.amplitude: 2.0; easing.period: 1.5 } }
+        
+        Component.onCompleted: { mainList.currentIndex = -1; mainList.currentIndex = 0; }
 
         /*Image {
             anchors.fill: parent
@@ -180,10 +182,10 @@ id: root
         Image {
         id: ftueLogo
 
-            width: vpx(350)
+            width: vpx(700)
             anchors { left: parent.left; leftMargin: globalMargin }
             source: "../assets/images/gameOS-logo.png"
-            sourceSize { width: 350; height: 250}
+            sourceSize { width: 700; height: 227}
             fillMode: Image.PreserveAspectFit
             smooth: true
             asynchronous: true
@@ -236,7 +238,6 @@ id: root
             opacity: focus ? 1 : 0.2
             anchors.verticalCenter: parent.verticalCenter
             onFocusChanged: {
-                sfxNav.play()
                 if (focus)
                     mainList.currentIndex = -1;
                 else
@@ -260,9 +261,8 @@ id: root
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: settings.MouseHover == "Yes"
-                onEntered: settingsbutton.focus = true;
-                onExited: settingsbutton.focus = false;
-                onClicked: settingsScreen();
+                onEntered: { sfxNav.play(); }
+                onClicked: { if (settingsbutton.focus == true) { settingsScreen(); } else { settingsbutton.focus = true; } }
             }
         }
 
@@ -289,18 +289,14 @@ id: root
             property bool selected: ListView.isCurrentItem
             focus: selected
             width: parent.width
-            height: vpx(360)
+            height: if (!ftue) { vpx(650); } else { vpx(360); }
             spacing: vpx(0)
             orientation: ListView.Horizontal
             clip: true
-            preferredHighlightBegin: vpx(0)
-            preferredHighlightEnd: parent.width
             highlightRangeMode: ListView.StrictlyEnforceRange
-            //highlightMoveDuration: 200
-            highlightMoveVelocity: -1
+            highlightMoveDuration: 200
             snapMode: ListView.SnapOneItem
             keyNavigationWraps: true
-            currentIndex: (storedHomePrimaryIndex == 0) ? storedHomeSecondaryIndex : 0
             Component.onCompleted: positionViewAtIndex(currentIndex, ListView.Visible)
             
             model: !ftue ? featuredCollection.games : 0
@@ -319,11 +315,6 @@ id: root
                     sourceSize { width: featuredlist.width; height: featuredlist.height }
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
-                        
-                    onSelectedChanged: {
-                        if (selected)
-                            logoAnim.start()
-                    }
 
                     Rectangle {
                         
@@ -333,38 +324,48 @@ id: root
                         Behavior on opacity { PropertyAnimation { duration: 150; easing.type: Easing.OutQuart; easing.amplitude: 2.0; easing.period: 1.5 } }
                     }
 
-                    Image {
-                    id: specialLogo
-
-                        width: parent.height - vpx(20)
-                        height: width
-                        source: Utils.logo(modelData)
-                        fillMode: Image.PreserveAspectFit
-                        asynchronous: true
-                        sourceSize { width: 256; height: 256 }
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        opacity: featuredlist.focus ? 1 : 0.5
-
-                        PropertyAnimation { 
-                        id: logoAnim; 
-                            target: specialLogo; 
-                            properties: "y"; 
-                            from: specialLogo.y-vpx(50); 
-                            duration: 100
-                        }
-                    }
+    // Game title
+    Text {
+    id: gametitle
+        
+        text: modelData ? modelData.title : ""
+        
+        anchors {
+            top:    parent.top;
+            left:   parent.left;
+            leftMargin: vpx(200);
+            right:  parent.right;
+            rightMargin: vpx(200);
+            bottom: parent.bottom;
+        }
+        
+        color: theme.text
+        font.family: titleFont.name
+        font.pixelSize: vpx(60)
+        font.bold: true
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        elide: Text.ElideRight
+        wrapMode: Text.WordWrap
+        opacity: if (mainList.currentIndex == 0) { 1; } else { 0.2; }
+        scale: if (mainList.currentIndex == 0) { 1.1; } else { 1; }
+        Behavior on opacity { NumberAnimation { duration: 200 } }
+        Behavior on scale { NumberAnimation { duration: 200 } }
+    }
 
                     // Mouse/touch functionality
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: settings.MouseHover == "Yes"
-                        onEntered: { sfxNav.play(); mainList.currentIndex = 0; }
+                        onEntered: { sfxNav.play(); }
                         onClicked: {
-                            if (selected)
-                                gameDetails(modelData);  
-                            else
-                                mainList.currentIndex = 0;
+                                if (mainList.currentIndex != 0) {
+                                    mainList.focus = true;
+                                    mainList.currentIndex = -1;
+                                    mainList.currentIndex = 0;
+                                } else {
+                                    gameDetails(modelData);
+                                }
                         }
                     }
                 }
@@ -418,9 +419,7 @@ id: root
             }
             spacing: vpx(10)
             orientation: ListView.Horizontal
-            preferredHighlightBegin: vpx(0)
-            preferredHighlightEnd: parent.width - vpx(60)
-            highlightRangeMode: ListView.StrictlyEnforceRange
+            highlightRangeMode: ListView.ApplyRange
             snapMode: ListView.SnapOneItem
             highlightMoveDuration: 100
             keyNavigationWraps: true
@@ -460,12 +459,10 @@ id: root
                     anchors.fill: parent
                     anchors.centerIn: parent
                     /*anchors.margins: vpx(15)*/
-                    anchors.topMargin: vpx(35)
-                    anchors.bottomMargin: vpx(35)
-                    anchors.leftMargin: vpx(22)
-                    anchors.rightMargin: vpx(22)
+                    anchors.topMargin: vpx(15)
+                    anchors.bottomMargin: vpx(15)
                     source: "../assets/images/logospng/" + Utils.processPlatformName(modelData.shortName) + ".png"
-                    sourceSize { width: 128; height: 64 }
+                    sourceSize { width: 256; height: 256 }
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     smooth: true
@@ -499,18 +496,20 @@ id: root
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: settings.MouseHover == "Yes"
-                    onEntered: { sfxNav.play(); mainList.currentIndex = platformlist.ObjectModel.index; platformlist.savedIndex = index; platformlist.currentIndex = index; }
+                    onEntered: {sfxNav.play();}
                     onExited: {}
                     onClicked: {
-                        if (selected)
-                        {
+			if (mainList.currentIndex != 1 || platformlist.currentIndex != index) {
+			                mainList.focus = true;
+                            mainList.currentIndex = -1;
+                            mainList.currentIndex = 1;
+                            mainList.currentIndex = platformlist.ObjectModel.index;  
+		            platformlist.currentIndex = index;
+                        } else {
+                            currentGame = null;
                             currentCollectionIndex = index;
                             softwareScreen();
-                        } else {
-                            mainList.currentIndex = platformlist.ObjectModel.index;
-                            platformlist.currentIndex = index;
-                        }
-                        
+                        }             
                     }
                 }
             }
@@ -522,6 +521,7 @@ id: root
                 // Accept
                 if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
+                    currentGame = null;
                     currentCollectionIndex = platformlist.currentIndex;
                     softwareScreen();            
                 }
@@ -551,10 +551,10 @@ id: root
             x: globalMargin - vpx(8)
 
             savedIndex: (storedHomePrimaryIndex === currentList.ObjectModel.index) ? storedHomeSecondaryIndex : 0
-
+            
             onActivateSelected: storedHomeSecondaryIndex = currentIndex;
             onActivate: { if (!selected) { mainList.currentIndex = currentList.ObjectModel.index; } }
-            onListHighlighted: { sfxNav.play(); mainList.currentIndex = currentList.ObjectModel.index; }
+            onListHighlighted: { mainList.focus = true; mainList.currentIndex = -1; mainList.currentIndex = currentList.ObjectModel.index; }
         }
 
         HorizontalCollection {
@@ -582,7 +582,7 @@ id: root
 
             onActivateSelected: storedHomeSecondaryIndex = currentIndex;
             onActivate: { if (!selected) { mainList.currentIndex = currentList.ObjectModel.index; } }
-            onListHighlighted: { sfxNav.play(); mainList.currentIndex = currentList.ObjectModel.index; }
+            onListHighlighted: { mainList.focus = true; mainList.currentIndex = -1; mainList.currentIndex = currentList.ObjectModel.index; }
         }
 
         HorizontalCollection {
@@ -610,7 +610,7 @@ id: root
 
             onActivateSelected: storedHomeSecondaryIndex = currentIndex;
             onActivate: { if (!selected) { mainList.currentIndex = currentList.ObjectModel.index; } }
-            onListHighlighted: { sfxNav.play(); mainList.currentIndex = currentList.ObjectModel.index; }
+            onListHighlighted: { mainList.focus = true; mainList.currentIndex = -1; mainList.currentIndex = currentList.ObjectModel.index; }
         }
 
         HorizontalCollection {
@@ -638,7 +638,7 @@ id: root
 
             onActivateSelected: storedHomeSecondaryIndex = currentIndex;
             onActivate: { if (!selected) { mainList.currentIndex = currentList.ObjectModel.index; } }
-            onListHighlighted: { sfxNav.play(); mainList.currentIndex = currentList.ObjectModel.index; }
+            onListHighlighted: { mainList.focus = true; mainList.currentIndex = -1; mainList.currentIndex = currentList.ObjectModel.index; }
         }
 
         HorizontalCollection {
@@ -666,21 +666,20 @@ id: root
 
             onActivateSelected: storedHomeSecondaryIndex = currentIndex;
             onActivate: { if (!selected) { mainList.currentIndex = currentList.ObjectModel.index; } }
-            onListHighlighted: { sfxNav.play(); mainList.currentIndex = currentList.ObjectModel.index; }
+            onListHighlighted: { mainList.focus = true; mainList.currentIndex = -1; mainList.currentIndex = currentList.ObjectModel.index; }
         }
 
     }
 
     ListView {
     id: mainList
-
         anchors.fill: parent
         model: mainModel
         focus: true
         highlightMoveDuration: 200
         highlightRangeMode: ListView.ApplyRange 
-        preferredHighlightBegin: header.height
-        preferredHighlightEnd: parent.height - (helpMargin * 2)
+        preferredHighlightBegin: parent.height*0.5
+        preferredHighlightEnd: parent.height*0.5
         snapMode: ListView.SnapOneItem
         keyNavigationWraps: true
         currentIndex: storedHomePrimaryIndex

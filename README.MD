@@ -1,32 +1,23 @@
-# gameOS - Fire v1.0
+# gameOS - Fire & sKye v1.0
 
-![gameOS Pegasus theme](https://i.imgur.com/dIqVgG0.png)
-![gameOS Pegasus theme](https://i.imgur.com/b5lIg5l.png)
-![gameOS Pegasus theme](https://i.imgur.com/LtJlNrr.png)
-![gameOS Pegasus theme](https://i.imgur.com/sweUEwJ.png)
-![gameOS Pegasus theme](https://i.imgur.com/jM6QTi7.png)
+## gameOS - Fire theme variant for Pegasus Frontend, with added modifications by HomeStarRunnerTron/Skye (skyetheguy.com)
 
-
-## gameOS - Fire theme variant for Pegasus Frontend
-
-Theme fork based on the gameOS theme by Seth Powell ([PlayingKarrde](https://github.com/PlayingKarrde/gameOS))
-The Fire version is a recoloured version of Seth's theme.
-The colour palette has been inspired by the Fire TV UI colours.
+Theme fork of a [https://github.com/jimbob4000/gameOS](theme fork) (I am just a copy of a copy of a copy of a copy) based on the gameOS theme by Seth Powell ([PlayingKarrde](https://github.com/PlayingKarrde/gameOS)). A full list of the changes involved in this, and other related documentation can be found [here](https://wiki.notfire.cc/index.php?title=Personal_Modifications_%26_Fixes_for_Pegasus_Game_Launcher_%2B_gameOS_Fire).
 
 ## Installation
 
-[Download the latest version](https://github.com/jimbob4000/gameOS/releases/latest) and extract it in your [Pegasus theme directory](http://pegasus-frontend.org/docs/user-guide/installing-themes/) under a folder called gameOS-Fire.
-
-Windows users may need to install the [K-lite Codec Pack](https://www.codecguide.com/download_kl.htm) to get video playback working.
-
-IMPORTANT: You need to have the latest version of Pegasus installed (not the current Stable release) otherwise you will get an error regarding Qt.Modules.
+Download the release ZIP, unzip, then move the gameOS-fire-sKye folder into the pegasus-frontend themes folder. You can follow the instructions [here](http://pegasus-frontend.org/docs/user-guide/installing-themes/).
 
 ## Version history
 
 v1.0.0
+<<<<<<< HEAD
 - Initial release based on [gameOS Version 1.0.9](https://github.com/PlayingKarrde/gameOS/releases/tag/1.0.9)
 - Recoloured theme
 - Darkened hero areas so clear logos have better visibility
 - Added gradients to buttons
 - Changed platform logos to white
 - Fonts changed
+=======
+- I deed eet!
+>>>>>>> initialrelease

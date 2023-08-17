@@ -60,12 +60,8 @@ id: root
         }
         spacing: vpx(5)
         orientation: ListView.Horizontal
-        preferredHighlightBegin: vpx(0)
-        preferredHighlightEnd: parent.width - vpx(60)
-        highlightRangeMode: ListView.ApplyRange
         snapMode: ListView.SnapOneItem 
         highlightMoveDuration: 100
-        highlight: highlightcomponent
         displayMarginEnd: itemWidth*2
         keyNavigationWraps: true
         

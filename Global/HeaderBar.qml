@@ -24,11 +24,14 @@ FocusScope {
 id: root
 
     property bool searchActive
+    property bool onDownDirectionButton: false;
+    property bool onDownTimeButton: false;
+    property bool onDownFilterButton: false;
 
     onFocusChanged: buttonbar.currentIndex = 0;
 
     function toggleSearch() {
-        searchActive = !searchActive;
+        searchActive = true;
     }
 
     Item {
@@ -48,18 +51,17 @@ id: root
 
         Image {
         id: platformlogo
-
             anchors {
-                top: parent.top; topMargin: vpx(20)
-                bottom: parent.bottom; bottomMargin: vpx(20)
-                left: parent.left; leftMargin: globalMargin
+                top: parent.top; topMargin: vpx(10)
+                left: parent.left; leftMargin: vpx(20)
             }
+            height: vpx(60)
             fillMode: Image.PreserveAspectFit
             source: "../assets/images/logospng/" + Utils.processPlatformName(currentCollection.shortName) + ".png"
             sourceSize { width: 256; height: 256 }
             smooth: true
             visible: false
-            asynchronous: true           
+            asynchronous: true         
         }
 
         OpacityMask {
@@ -70,7 +72,7 @@ id: root
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: previousScreen();
+                onClicked: { gamegrid.currentIndex = 0; previousScreen(); }
             }
         }
 
@@ -100,7 +102,7 @@ id: root
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: previousScreen();
+                onClicked: { gamegrid.currentIndex = 0; previousScreen(); }
             }
         }
 
@@ -160,6 +162,12 @@ id: root
                     text: searchTerm
                     onTextEdited: {
                         searchTerm = searchInput.text
+                        reselecting = true;
+                        if (gamegrid.count > 1) {
+                            reselecting = true;
+                        } else {
+                            reselecting = false;
+                        }
                     }
                 }
 
@@ -174,10 +182,11 @@ id: root
                         if (!searchActive)
                         {
                             toggleSearch();
-                            searchInput.selectAll();
                         }
                     }
                 }
+                
+                Component.onCompleted: toggleSearch();
 
                 Keys.onPressed: {
                     // Accept
@@ -185,9 +194,6 @@ id: root
                         event.accepted = true;
                         if (!searchActive) {
                             toggleSearch();
-                            searchInput.selectAll();
-                        } else {
-                            searchInput.selectAll();
                         }
                     }
                 }
@@ -206,7 +212,7 @@ id: root
                     anchors.fill: parent
                     radius: height/2
                     color: theme.accent
-                    visible: directionbutton.selected
+                    visible: directionbutton.selected || onDownDirectionButton == true
                 }
 
                 Text {
@@ -220,12 +226,24 @@ id: root
                     anchors.centerIn: parent
                     elide: Text.ElideRight
                 }
+                
+                // Mouse/touch functionality
+                MouseArea {
+                    anchors.fill: parent
+                    onEntered: {onDownDirectionButton = true;}
+                    onExited: {onDownDirectionButton = false;}
+                    onClicked: {
+                        toggleOrderBy();
+                        gamegrid.currentIndex = 0;
+                    }
+                }
 
                 Keys.onPressed: {
                     // Accept
                     if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                         event.accepted = true;
                         toggleOrderBy();
+                        gamegrid.currentIndex = 0;
                     }
                 }
             }
@@ -243,13 +261,19 @@ id: root
                     anchors.fill: parent
                     radius: height/2
                     color: theme.accent
-                    visible: titlebutton.selected
+                    visible: titlebutton.selected || onDownTimeButton == true
                 }
 
                 Text {
                 id: ordertitle
                     
-                    text: "By " + sortByFilter[sortByIndex]
+                    text: if (sortByFilter[sortByIndex] == "sortBy") {
+                            "Sort by Title";
+                        } else if (sortByFilter[sortByIndex] == "lastPlayed") {
+                            "Sort by Last Opened";
+                        } else if (sortByFilter[sortByIndex] == "playTime") {
+                            "Sort by Time Spent";
+                        }
                                     
                     color: theme.text
                     font.family: subtitleFont.name
@@ -257,12 +281,24 @@ id: root
                     anchors.centerIn: parent
                     elide: Text.ElideRight
                 }
+                
+                // Mouse/touch functionality
+                MouseArea {
+                    anchors.fill: parent
+                    onEntered: {onDownTimeButton = true;}
+                    onExited: {onDownTimeButton = false;}
+                    onClicked: {
+                        cycleSort();
+                        gamegrid.currentIndex = 0;
+                    }
+                }
 
                 Keys.onPressed: {
                     // Accept
                     if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                         event.accepted = true;
                         cycleSort();
+                        gamegrid.currentIndex = 0;
                     }
                 }
             }
@@ -280,14 +316,14 @@ id: root
                     anchors.fill: parent
                     radius: height/2
                     color: theme.accent
-                    visible: filterbutton.selected
+                    visible: filterbutton.selected || onDownFilterButton == true
                 }
                 
                 // Filter title
                 Text {
                 id: filtertitle
                     
-                    text: (showFavs) ? "Favorites" : "All games"
+                    text: (showFavs) ? "Favorites" : "Show All"
                                     
                     color: theme.text
                     font.family: subtitleFont.name
@@ -295,12 +331,24 @@ id: root
                     anchors.centerIn: parent
                     elide: Text.ElideRight
                 }
+                
+                // Mouse/touch functionality
+                MouseArea {
+                    anchors.fill: parent
+                    onEntered: {onDownFilterButton = true;}
+                    onExited: {onDownFilterButton = false;}
+                    onClicked: {
+                        toggleFavs();
+                        gamegrid.currentIndex = 0;
+                    }
+                }
 
                 Keys.onPressed: {
                     // Accept
                     if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                         event.accepted = true;
                         toggleFavs();
+                        gamegrid.currentIndex = 0;
                     }
                 }
             }
@@ -319,7 +367,15 @@ id: root
                 right: parent.right; rightMargin: globalMargin
                 left: parent.left; top: parent.top; topMargin: vpx(15)
             }
-            
+        }
+        
+        // Mouse/touch functionality
+        MouseArea {
+                    anchors.fill: parent
+                    onEntered: {}
+                    onExited: {}
+                    onClicked: {}
+                    z: -100
         }
         
     }
