@@ -91,7 +91,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 1"
-            setting: "Recently Played,Most Played,Recommended,Top by Publisher,Top by Genre,None,Favorites"
+            setting: "Recently Launched,Most Time Spent,Randomly Picked,Top by Publisher,Top by Genre,None,Favorites"
         }
         ListElement {
             settingName: "Collection 1 - Thumbnail"
@@ -99,7 +99,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 2"
-            setting: "Most Played,Recommended,Top by Publisher,Top by Genre,None,Favorites,Recently Played"
+            setting: "Most Time Spent,Randomly Picked,Top by Publisher,Top by Genre,None,Favorites,Recently Launched"
         }
         ListElement {
             settingName: "Collection 2 - Thumbnail"
@@ -107,7 +107,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 3"
-            setting: "Top by Publisher,Top by Genre,None,Favorites,Recently Played,Most Played,Recommended"
+            setting: "Top by Publisher,Top by Genre,None,Favorites,Recently Launched,Most Time Spent,Randomly Picked"
         }
         ListElement {
             settingName: "Collection 3 - Thumbnail"
@@ -115,7 +115,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 4"
-            setting: "Top by Genre,None,Favorites,Recently Played,Most Played,Recommended,Top by Publisher"
+            setting: "Top by Genre,None,Favorites,Recently Launched,Most Time Spent,Randomly Picked,Top by Publisher"
         }
         ListElement {
             settingName: "Collection 4 - Thumbnail"
@@ -123,7 +123,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 5"
-            setting: "None,Favorites,Recently Played,Most Played,Recommended,Top by Publisher,Top by Genre"
+            setting: "None,Favorites,Recently Launched,Most Time Spent,Randomly Picked,Top by Publisher,Top by Genre"
         }
         ListElement {
             settingName: "Collection 5 - Thumbnail"

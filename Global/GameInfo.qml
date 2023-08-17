@@ -42,6 +42,7 @@ id: infocontainer
         horizontalAlignment: Text.AlignHLeft
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
+        wrapMode: Text.WordWrap
     }
 
     // Meta data
@@ -55,55 +56,15 @@ id: infocontainer
             right: parent.right
         }
 
-        // Rating box
-        Text {
-        id: ratingtitle
-
-            width: contentWidth
-            height: parent.height
-            anchors { left: parent.left; }
-            verticalAlignment: Text.AlignVCenter
-            text: "Rating: "
-            font.pixelSize: vpx(16)
-            font.family: subtitleFont.name
-            font.bold: true
-            color: theme.textgrey
-        }
-
-        Text {
-        id: ratingtext
-            
-            property real processedRating: gameData ? Math.round(gameData.rating * 100) / 100 : ""
-            width: contentWidth
-            height: parent.height
-            anchors { left: ratingtitle.right; leftMargin: vpx(5) }
-            verticalAlignment: Text.AlignVCenter
-            text: steam ? processedRating*5 : processedRating
-            font.pixelSize: vpx(16)
-            font.family: subtitleFont.name
-            color: theme.text
-        }
-
-        Rectangle {
-        id: divider1
-            width: vpx(2)
-            anchors {
-                left: ratingtext.right; leftMargin: (25)
-                top: parent.top; topMargin: vpx(10)
-                bottom: parent.bottom; bottomMargin: vpx(10)
-            }
-            opacity: 0.2
-        }
-
         // Players box
         Text {
         id: playerstitle
 
             width: contentWidth
             height: parent.height
-            anchors { left: divider1.right; leftMargin: vpx(25) }
+            anchors { leftMargin: vpx(25) }
             verticalAlignment: Text.AlignVCenter
-            text: "Players: "
+            text: "Time Spent: "
             font.pixelSize: vpx(16)
             font.family: subtitleFont.name
             font.bold: true
@@ -117,7 +78,40 @@ id: infocontainer
             height: parent.height
             anchors { left: playerstitle.right; leftMargin: vpx(5) }
             verticalAlignment: Text.AlignVCenter
-            text: gameData ? gameData.players : ""
+            text: {
+            function formatplayTime(timeSecs) {
+                var hours = Math.floor(timeSecs / (60 * 60));
+                var minutes = Math.floor((timeSecs % (60 * 60)) / 60);
+                var hoursWord = "";
+                var minutesWord = "";
+                var timecompositeWord = "";
+                
+                if (hours == 1) {
+                    hoursWord = " hour, ";
+                } else {
+                    hoursWord = " hours, "
+                }
+                
+                if (minutes == 1) {
+                    minutesWord = " minute";
+                } else {
+                    minutesWord = " minutes"
+                }
+                
+                if (hours == 0 && minutes == 0) {
+                    timecompositeWord = minutes + minutesWord;
+                } else if (hours == 0 && minutes != 0) {
+                    timecompositeWord = minutes + minutesWord;
+                } else if (hours != 0 && minutes == 0) {
+                    timecompositeWord = hours + hoursWord;
+                } else if (hours != 0 && minutes != 0) {
+                    timecompositeWord = hours + hoursWord + minutes + minutesWord;
+                }
+                
+                return timecompositeWord;
+            }
+            return "" + formatplayTime(game ? game.playTime : 0);
+            }
             font.pixelSize: vpx(16)
             font.family: subtitleFont.name
             color: theme.text
@@ -164,29 +158,6 @@ id: infocontainer
             font.family: subtitleFont.name
             elide: Text.ElideRight
             color: theme.text
-        }
-    }
-
-    // Description
-    PegasusUtils.AutoScroll
-    {
-    id: gameDescription
-    
-        anchors {
-            left: parent.left; 
-            right: parent.right;
-            top: metarow.bottom
-            bottom: parent.bottom;
-        }
-
-        Text {
-            width: parent.width
-            text: gameData && (gameData.summary || gameData.description) ? gameData.description || gameData.summary : "No description available"
-            font.pixelSize: vpx(16)
-            font.family: bodyFont.name
-            color: theme.textgreylight
-            elide: Text.ElideRight
-            wrapMode: Text.WordWrap
         }
     }
     

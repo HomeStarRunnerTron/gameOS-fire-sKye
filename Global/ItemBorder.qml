@@ -73,14 +73,14 @@ id: root
         }
         anchors.horizontalCenter: parent.horizontalCenter
         radius: height/2
-        opacity: selected ? 1 : 0
+        opacity: 0
         Behavior on opacity { NumberAnimation { duration: 100 } }
         visible: opacity !== 0
 
         Text {
         id: bubbletitle
 
-            text: modelData.title
+            text: ""
             color: theme.text
             font {
                 family: subtitleFont.name

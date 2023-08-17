@@ -55,9 +55,9 @@ id: root
             DetailsDefault:                api.memory.has("Default to full details") ? api.memory.get("Default to full details") : "No",
             ShowcaseColumns:               api.memory.has("Number of games showcased") ? api.memory.get("Number of games showcased") : "15",
             ShowcaseFeaturedCollection:    api.memory.has("Featured collection") ? api.memory.get("Featured collection") : "Favorites",
-            ShowcaseCollection1:           api.memory.has("Collection 1") ? api.memory.get("Collection 1") : "Recently Played",
+            ShowcaseCollection1:           api.memory.has("Collection 1") ? api.memory.get("Collection 1") : "Recently Launched",
             ShowcaseCollection1_Thumbnail: api.memory.has("Collection 1 - Thumbnail") ? api.memory.get("Collection 1 - Thumbnail") : "Wide",
-            ShowcaseCollection2:           api.memory.has("Collection 2") ? api.memory.get("Collection 2") : "Most Played",
+            ShowcaseCollection2:           api.memory.has("Collection 2") ? api.memory.get("Collection 2") : "Most Time Spent",
             ShowcaseCollection2_Thumbnail: api.memory.has("Collection 2 - Thumbnail") ? api.memory.get("Collection 2 - Thumbnail") : "Tall",
             ShowcaseCollection3:           api.memory.has("Collection 3") ? api.memory.get("Collection 3") : "Top by Publisher",
             ShowcaseCollection3_Thumbnail: api.memory.has("Collection 3 - Thumbnail") ? api.memory.get("Collection 3 - Thumbnail") : "Wide",
@@ -88,7 +88,7 @@ id: root
 
     // Filtering options
     property bool showFavs: false
-    property var sortByFilter: ["title", "lastPlayed", "playCount", "rating"]
+    property var sortByFilter: ["sortBy", "lastPlayed", "playTime"]
     property int sortByIndex: 0
     property var orderBy: Qt.AscendingOrder
     property string searchTerm: ""
@@ -262,8 +262,10 @@ id: root
             currentGame = game;
 
         // Save the state before pushing the new one
-        lastState.push(state);
-        root.state = "gameviewscreen";
+        if (root.state != "gameviewscreen") {
+            lastState.push(state);
+            root.state = "gameviewscreen";
+        }
     }
 
     function settingsScreen() {
@@ -330,41 +332,69 @@ id: root
         Behavior on opacity { PropertyAnimation { duration: transitionTime } }
 
         anchors.fill: parent
+        
     }
 
-    SoftwareListMenu {
+    Loader  {
     id: listviewloader
 
         focus: (root.state === "softwarescreen")
-        visible: opacity !== 0
+        active: opacity !== 0
         opacity: focus ? 1 : 0
         Behavior on opacity { PropertyAnimation { duration: transitionTime } }
 
         anchors.fill: parent
+        sourceComponent: listview
+        asynchronous: true
+    }
+    
+    Component {
+    id: listview
+
+        SoftwareListMenu { focus: true }
     }
 
-    GameView {
+    Loader  {
     id: gameviewloader
 
         focus: (root.state === "gameviewscreen")
-        visible: opacity !== 0
-        onVisibleChanged: if (!active) popLastGame();
+        active: opacity !== 0
+        onActiveChanged: if (!active) popLastGame();
         opacity: focus ? 1 : 0
         Behavior on opacity { PropertyAnimation { duration: transitionTime } }
 
         anchors.fill: parent
-        game: currentGame
+        sourceComponent: gameview
+        asynchronous: true
+        //game: currentGame
     }
 
-    LaunchGame {
+    Component {
+    id: gameview
+
+        GameView {
+            focus: true
+            game: currentGame
+        }
+    }
+
+    Loader  {
     id: launchgameloader
 
         focus: (root.state === "launchgamescreen")
-        visible: opacity !== 0
+        active: opacity !== 0
         opacity: focus ? 1 : 0
         Behavior on opacity { PropertyAnimation { duration: transitionTime } }
 
         anchors.fill: parent
+        sourceComponent: launchgameview
+        asynchronous: true
+    }
+    
+    Component {
+    id: launchgameview
+
+        LaunchGame { focus: true }
     }
 
     SettingsScreen {

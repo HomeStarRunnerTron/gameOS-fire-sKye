@@ -54,7 +54,7 @@ id: root
     // In order to use the retropie icons here we need to do a little collection specific hack
     property bool playVideo: gameData ? gameData.assets.videoList.length && (settings.AllowThumbVideo == "Yes") : ""
     scale: selected ? 1 : 0.95
-    Behavior on scale { NumberAnimation { duration: 100 } }
+    Behavior on scale { NumberAnimation { duration: 400 } }
     z: selected ? 10 : 1
 
     onSelectedChanged: {
@@ -94,8 +94,8 @@ id: root
             anchors.margins: vpx(2)
             source: modelData ? modelData.assets.screenshots[0] || modelData.assets.background || "" : ""
             fillMode: Image.PreserveAspectCrop
-            sourceSize { width: 256; height: 256 }
-            smooth: false
+            sourceSize { width: 512; height: 512 }
+            smooth: true
             asynchronous: true
             Behavior on opacity { NumberAnimation { duration: 200 } }
         }
@@ -108,12 +108,12 @@ id: root
             anchors.margins: root.width/10
             property var logoImage: (gameData && gameData.collections.get(0).shortName === "retropie") ? gameData.assets.boxFront : (gameData.collections.get(0).shortName === "steam") ? logo(gameData) : gameData.assets.logo
             source: modelData ? logoImage || "" : ""
-            sourceSize { width: 200; height: 150 }
+            sourceSize { width: 400; height: 300 }
             fillMode: Image.PreserveAspectFit
             asynchronous: true
             smooth: true
             scale: selected ? 1.1 : 1
-            Behavior on scale { NumberAnimation { duration: 100 } }
+            Behavior on scale { NumberAnimation { duration: 300 } }
             z: 10
         }
 
@@ -256,11 +256,8 @@ id: root
     MouseArea {
         anchors.fill: parent
         hoverEnabled: settings.MouseHover == "Yes"
-        onEntered: { sfxNav.play(); highlighted(); }
-        onExited: { unhighlighted(); }
-        onClicked: {
-            sfxNav.play();
-            activated();
-        }
+	onEntered: {reselecting = false; gamegrid.focus = true;}
+	onExited: {}
+        onClicked: { if (selected) { sfxNav.play(); activated(); } else { sfxNav.play(); highlighted(); } }
     }
 }
