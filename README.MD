@@ -25,7 +25,7 @@ _I like to open eBooks with it...!_
 
 _Two classes of logos, for correct positioning on both Grid View and Game View!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/N2G1dWP.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/N30aNpE.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023D.png))
 
 _Title wrap on long titles in Game Details, with playTime variable-- properly formatted, even!_
