@@ -1,5 +1,4 @@
-# gameOS - Fire & sKye
-# Current Version: v1.0
+# gameOS - Fire & sKye \n Current Version: v1.0
 
 ![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/EvS0TCV.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023A.png))
