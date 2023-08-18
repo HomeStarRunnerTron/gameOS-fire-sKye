@@ -330,6 +330,8 @@ function logocentered(data) {
     else {
       if (data.assets.titlescreen != "")
         return data.assets.titlescreen;
+      else if (data.assets.logo != "")
+        return data.assets.logo;
     }
   }
   return "";
