@@ -29,7 +29,7 @@ id: root
         }*/
         ListElement {
             settingName: "Allow video thumbnails"
-            setting: "Yes,No"
+            setting: "No,Yes"
         }
         ListElement {
             settingName: "Play video thumbnail audio"
@@ -41,7 +41,7 @@ id: root
         }
         ListElement {
             settingName: "Animate highlight"
-            setting: "No,Yes"
+            setting: "Yes,No"
         }
         ListElement {
             settingName: "Enable mouse hover"
@@ -53,7 +53,7 @@ id: root
         }
         ListElement {
             settingName: "Hide button help"
-            setting: "No,Yes"
+            setting: "Yes,No"
         }
     }
 
@@ -87,7 +87,7 @@ id: root
     id: showcaseSettingsModel
         ListElement {
             settingName: "Number of games showcased"
-            setting: "15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,1,2,3,4,5,6,7,8,9,10,11,12,13,14"
+            setting: "10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,1,2,3,4,5,6,7,8,9"
         }
         ListElement {
             settingName: "Collection 1"
@@ -95,7 +95,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 1 - Thumbnail"
-            setting: "Wide,Tall,Square"
+            setting: "Tall,Square,Wide"
         }
         ListElement {
             settingName: "Collection 2"
@@ -107,15 +107,15 @@ id: root
         }
         ListElement {
             settingName: "Collection 3"
-            setting: "Top by Publisher,Top by Genre,None,Favorites,Recently Launched,Most Time Spent,Randomly Picked"
+            setting: "Randomly Picked,Top by Publisher,Top by Genre,None,Favorites,Recently Launched,Most Time Spent"
         }
         ListElement {
             settingName: "Collection 3 - Thumbnail"
-            setting: "Wide,Tall,Square"
+            setting: "Tall,Square,Wide"
         }
         ListElement {
             settingName: "Collection 4"
-            setting: "Top by Genre,None,Favorites,Recently Launched,Most Time Spent,Randomly Picked,Top by Publisher"
+            setting: "None,Favorites,Recently Launched,Most Time Spent,Randomly Picked,Top by Publisher,Top by Genre"
         }
         ListElement {
             settingName: "Collection 4 - Thumbnail"
@@ -127,7 +127,7 @@ id: root
         }
         ListElement {
             settingName: "Collection 5 - Thumbnail"
-            setting: "Wide,Tall,Square"
+            setting: "Tall,Square,Wide"
         }
 
     }
@@ -144,11 +144,11 @@ id: root
 
         ListElement {
             settingName: "Grid Thumbnail"
-            setting: "Wide,Tall,Square,Box Art"
+            setting: "Tall,Square,Box Art,Wide"
         }
         ListElement {
             settingName: "Number of columns"
-            setting: "3,4,5,6,7,8"
+            setting: "5,6,7,8,3,4"
         }
     }
 
@@ -164,7 +164,7 @@ id: root
 
         ListElement {
             settingName: "Game Background"
-            setting: "Screenshot,Fanart"
+            setting: "Fanart,Screenshot"
         }
         ListElement {
             settingName: "Game Logo"
@@ -176,7 +176,7 @@ id: root
         }
         ListElement {
             settingName: "Video preview"
-            setting: "Yes,No"
+            setting: "No,Yes"
         }
         ListElement {
             settingName: "Video preview audio"
@@ -192,7 +192,7 @@ id: root
         }
         ListElement {
             settingName: "Show scanlines"
-            setting: "Yes,No"
+            setting: "No,Yes"
         }
     }
 
