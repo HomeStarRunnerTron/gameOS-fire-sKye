@@ -45,10 +45,6 @@ id: root
             return ""
         }
     }
-    
-    Component.onCompleted: {
-        reselecting = true;
-    }
 
     ListDeveloper { id: developerCollection; developer: game && game.developer ? game.developer : ""; max: 10 }
     ListPublisher { id: publisherCollection; publisher: game && game.publisher ? game.publisher : ""; max: 10 }

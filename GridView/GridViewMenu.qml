@@ -29,6 +29,8 @@ id: root
     function gameActivated() {
         storedCollectionGameIndex = gamegrid.currentIndex
         gameDetails(list.currentGame(gamegrid.currentIndex));
+        gamegrid.currentIndex = gamegrid.currentIndex + 1;
+        gamegrid.currentIndex = gamegrid.currentIndex - 1;
     }
 
     property var sortedGames;
@@ -38,7 +40,7 @@ id: root
     
     property bool isLeftTriggerPressed: false;
     property bool isRightTriggerPressed: false;
-    property bool reselecting: false;
+    property bool reselecting: true;
 
     function prevChar(c) {
         charReverse = String.fromCharCode(c);

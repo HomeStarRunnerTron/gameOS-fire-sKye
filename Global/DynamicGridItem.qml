@@ -256,7 +256,7 @@ id: root
     MouseArea {
         anchors.fill: parent
         hoverEnabled: settings.MouseHover == "Yes"
-	onEntered: {reselecting = false; gamegrid.focus = true;}
+	onEntered: {if (lastState.length > 0) { reselecting = false; gamegrid.focus = true; }}
 	onExited: {}
         onClicked: { if (selected) { sfxNav.play(); activated(); } else { sfxNav.play(); highlighted(); } }
     }
