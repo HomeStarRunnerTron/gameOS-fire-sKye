@@ -163,11 +163,6 @@ id: root
                     onTextEdited: {
                         searchTerm = searchInput.text
                         reselecting = true;
-                        if (gamegrid.count > 1) {
-                            reselecting = true;
-                        } else {
-                            reselecting = false;
-                        }
                     }
                 }
 

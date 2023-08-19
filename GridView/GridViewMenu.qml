@@ -333,7 +333,7 @@ id: root
         Keys.onDownPressed: {
             sfxNav.play();
             gamegrid.focus = true;
-            if (gamegrid.currentIndex > -1) {
+            if (gamegrid.currentIndex > -1 && gamegrid.count > 1) {
                 gamegrid.currentIndex = gamegrid.currentIndex + 1;
                 gamegrid.currentIndex = gamegrid.currentIndex - 1;
             } else {
@@ -458,7 +458,7 @@ id: root
                     }
                     
                     Component.onCompleted: {
-                        if (reselecting == true) {
+                        if (reselecting == true && gamegrid.count > 1) {
                             gamegrid.currentIndex = gamegrid.currentIndex + 1;
                             gamegrid.currentIndex = gamegrid.currentIndex - 1;
                         }
@@ -503,9 +503,9 @@ id: root
                 }
             }
             
-            Keys.onDownPressed:     { sfxNav.play(); moveCurrentIndexDown() }
-            Keys.onLeftPressed:     { sfxNav.play(); moveCurrentIndexLeft() }
-            Keys.onRightPressed:    { sfxNav.play(); moveCurrentIndexRight() }
+            Keys.onDownPressed:     { sfxNav.play(); reselecting = false; moveCurrentIndexDown() }
+            Keys.onLeftPressed:     { sfxNav.play(); reselecting = false; moveCurrentIndexLeft() }
+            Keys.onRightPressed:    { sfxNav.play(); reselecting = false; moveCurrentIndexRight() }
         }
 
     }
@@ -631,6 +631,10 @@ id: root
     }
 
     onFocusChanged: {
+        if (reselecting == true && gamegrid.count > 1) {
+            gamegrid.currentIndex = gamegrid.currentIndex + 1;
+            gamegrid.currentIndex = gamegrid.currentIndex - 1;
+        }
         if (focus) {
             currentHelpbarModel = gridviewHelpModel;
             gamegrid.focus = true;
