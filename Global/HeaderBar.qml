@@ -228,8 +228,14 @@ id: root
                     onEntered: {onDownDirectionButton = true;}
                     onExited: {onDownDirectionButton = false;}
                     onClicked: {
-                        toggleOrderBy();
+                        var tempIndex = gamegrid.currentIndex;
                         gamegrid.currentIndex = 0;
+                        toggleOrderBy();
+                        if (sortByFilter[sortByIndex] == "sortBy") {
+                            reselecting = true;
+                            gamegrid.currentIndex = 0;
+                            gamegrid.currentIndex = (tempIndex - (gamegrid.count-1))*-1;
+                        }
                     }
                 }
 
@@ -283,6 +289,7 @@ id: root
                     onEntered: {onDownTimeButton = true;}
                     onExited: {onDownTimeButton = false;}
                     onClicked: {
+                        gamegrid.currentIndex = 0;
                         cycleSort();
                         gamegrid.currentIndex = 0;
                     }
@@ -333,6 +340,7 @@ id: root
                     onEntered: {onDownFilterButton = true;}
                     onExited: {onDownFilterButton = false;}
                     onClicked: {
+                        gamegrid.currentIndex = 0;
                         toggleFavs();
                         gamegrid.currentIndex = 0;
                     }

@@ -29,6 +29,9 @@ id: root
     function gameActivated() {
         storedCollectionGameIndex = gamegrid.currentIndex
         gameDetails(list.currentGame(gamegrid.currentIndex));
+        if (sortByFilter[sortByIndex] != "sortBy") {
+            reselecting = true;
+        }
         gamegrid.currentIndex = gamegrid.currentIndex + 1;
         gamegrid.currentIndex = gamegrid.currentIndex - 1;
     }
@@ -176,10 +179,10 @@ id: root
                 } else if (orderBy === Qt.DescendingOrder) {
                     if (modifier == +1) {
                         nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare(currentLetter) >= 0);
-                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                        nextIndex = (nextIndex - gamegrid.count)*-1;
                     } else if (modifier == -1) {
                         nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare(charReverse) >= 0);
-                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                        nextIndex = (nextIndex - gamegrid.count)*-1;
                     }
                 }
             } while(nextIndex === -1)
@@ -187,30 +190,30 @@ id: root
             if (orderBy === Qt.AscendingOrder) {
                 gamegrid.currentIndex = nextIndex;
             } else if (orderBy === Qt.DescendingOrder) {
-                if (nextIndex == sortedGames.length && modifier == -1) {
+                if (nextIndex == gamegrid.count && modifier == -1) {
                     if (charCode > lastAlpha) {
                         nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare("a") >= 0);
-                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                        nextIndex = (nextIndex - gamegrid.count)*-1;
                         gamegrid.currentIndex = nextIndex;
                     } else if (currentLetter == "") {
                         nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare("b") >= 0);
-                        nextIndex = (nextIndex - (sortedGames.length))*-1;
+                        nextIndex = (nextIndex - gamegrid.count)*-1;
                         gamegrid.currentIndex = nextIndex;
                     } else if (nextLetter == "a" && modifier == -1) {
                         nextIndex = sortedGamesRedo.findIndex(g => g.toLowerCase().localeCompare("a") >= 0);
-                        nextIndex = (nextIndex - (sortedGames.length)+1)*-1;
+                        nextIndex = (nextIndex - gamegrid.count + 1)*-1;
                         gamegrid.currentIndex = nextIndex;
                     } else {
                         gamegrid.currentIndex = 0;
                         nextIndex = 0;
                     }
-                } else if (nextIndex == sortedGames.length && modifier == +1) {
+                } else if (nextIndex == gamegrid.count && modifier == +1) {
                     gamegrid.currentIndex = 0;
                     nextIndex = 0;
-                } else if (nextIndex == sortedGames.length && modifier == +1) {
+                } else if (nextIndex == gamegrid.count && modifier == +1) {
                     gamegrid.currentIndex = 0;
                     nextIndex = 0;
-                } else if (nextIndex == sortedGames.length+1 && modifier == -1) {
+                } else if (nextIndex == gamegrid.count + 1 && modifier == -1) {
                     gamegrid.currentIndex = 0;
                     nextIndex = 0;
                 } else {
@@ -632,6 +635,7 @@ id: root
 
     onFocusChanged: {
         if (reselecting == true && gamegrid.count > 1) {
+            gamegrid.currentIndex = -1;
             gamegrid.currentIndex = gamegrid.currentIndex + 1;
             gamegrid.currentIndex = gamegrid.currentIndex - 1;
         }
