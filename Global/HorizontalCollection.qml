@@ -62,6 +62,7 @@ id: root
         orientation: ListView.Horizontal
         snapMode: ListView.SnapOneItem 
         highlightMoveDuration: 100
+        highlight: highlightcomponent
         displayMarginEnd: itemWidth*2
         keyNavigationWraps: true
         
