@@ -393,6 +393,7 @@ id: root
             cellWidth: width / numColumns
             cellHeight: ((showBoxes) ? cellWidth * cellHeightRatio : savedCellHeight) + titleMargin
             highlightMoveDuration: 200
+            highlight: highlightcomponent
             keyNavigationWraps: false
             displayMarginBeginning: cellHeight * 2
             displayMarginEnd: cellHeight * 2
