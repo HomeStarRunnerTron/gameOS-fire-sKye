@@ -248,6 +248,7 @@ id: root
         // Accept
         if (api.keys.isAccept(event) && !event.isAutoRepeat) {
             event.accepted = true;
+            reselecting = false;
             activated();        
         }
     }
