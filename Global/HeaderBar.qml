@@ -163,6 +163,11 @@ id: root
                     onTextEdited: {
                         searchTerm = searchInput.text
                         reselecting = true;
+                        if (gamegrid.count == 1) {
+                            var tempvarBeforeVideo = gamegrid.currentIndex;
+                            gamegrid.currentIndex = -1;
+                            gamegrid.currentIndex = tempvarBeforeVideo;
+                        }
                     }
                 }
 

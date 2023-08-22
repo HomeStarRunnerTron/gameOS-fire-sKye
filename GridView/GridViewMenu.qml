@@ -465,10 +465,18 @@ id: root
                         if (reselecting == true && gamegrid.count > 1) {
                             gamegrid.currentIndex = gamegrid.currentIndex + 1;
                             gamegrid.currentIndex = gamegrid.currentIndex - 1;
+                            reindexing.start();
                         }
                     }
                 }
             }
+            
+            Timer {
+    id: reindexing
+
+        interval: 500
+        onTriggered: { reselecting = false; reindexing.stop(); }
+    }
 
             Component {
             id: highlightcomponent
@@ -548,7 +556,7 @@ id: root
             event.accepted = true;
             if (gamegrid.focus) {
                 previousScreen();
-                gamegrid.currentIndex = 0;
+                gamegrid.currentIndex = -1;
                 sortedGames = null;
                 currentGame = null;
             } else {
