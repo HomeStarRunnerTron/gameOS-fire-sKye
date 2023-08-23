@@ -163,6 +163,10 @@ id: root
                     onTextEdited: {
                         searchTerm = searchInput.text
                         reselecting = true;
+                        if (gamegrid.count <= settings.GridColumns) {
+                            gamegrid.currentIndex = -1;
+                            gamegrid.currentIndex = 0;
+                        }
                     }
                 }
 

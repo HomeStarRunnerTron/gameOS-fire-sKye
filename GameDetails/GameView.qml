@@ -133,6 +133,16 @@ id: root
             fadescreenshot.stop();
         }
     }
+    
+        Image {
+            anchors.fill: parent
+            source: game.assets.boxFull ? game.assets.boxFull : ""
+            sourceSize { width: root.width; height: root.height}
+            fillMode: Image.PreserveAspectCrop
+            smooth: true
+            asynchronous: true
+            visible: videoPreviewLoader.sourceComponent != undefined
+        }
 
     // NOTE: Video Preview
     Component {

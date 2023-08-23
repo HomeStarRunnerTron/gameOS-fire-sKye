@@ -126,44 +126,51 @@ id: root
         width: parent.width
         height: vpx(360)
         visible: ftue
-        opacity: {
-            switch (mainList.currentIndex) {
-                case 0:
-                    return 1;
-                case 1:
-                    return 0.3;
-                case 2:
-                    return 0.1;
-                case -1:
-                    return ftueContainer.opacity;
-                default:
-                    return 0
-            }
-        }
-        Behavior on opacity { PropertyAnimation { duration: 1000; easing.type: Easing.OutQuart; easing.amplitude: 2.0; easing.period: 1.5 } }
         
         Component.onCompleted: { mainList.currentIndex = -1; mainList.currentIndex = 0; }
 
-        /*Image {
+        Image {
             anchors.fill: parent
-            source: "../assets/images/ftueBG01.jpeg"
+            source: if (settings.VideoPreview === "Yes") { "../assets/images/ftueBG01.png" } else { "" }
             sourceSize { width: root.width; height: root.height}
             fillMode: Image.PreserveAspectCrop
             smooth: true
             asynchronous: true
-        }*/
-
+        }
+        
         Rectangle {
             anchors.fill: parent
             color: "black"
-            opacity: 0.5
+            opacity: if (settings.VideoPreview === "Yes") { 0 } else { 0.5 }
         }
 
+        Rectangle {
+            anchors.fill: parent
+            color: "#12151a"
+            z: 1;
+            
+        opacity: {
+            switch (mainList.currentIndex) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 0.7;
+                case 2:
+                    return 0.9;
+                case -1:
+                    break;
+                default:
+                    return 1
+            }
+        }
+        Behavior on opacity { PropertyAnimation { duration: 1000; easing.type: Easing.OutQuart; easing.amplitude: 2.0; easing.period: 1.5 } }
+        }
+        
         Video {
         id: videocomponent
 
             anchors.fill: parent
-            source: "../assets/video/ftue.mp4"
+            source: if (settings.VideoPreview === "Yes") { "../assets/video/ftue.mp4" } else { "" }
             fillMode: VideoOutput.PreserveAspectCrop
             muted: true
             loops: MediaPlayer.Infinite
