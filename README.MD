@@ -1,36 +1,36 @@
 # gameOS - Fire & sKye <br/> Current Version: v1.0
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/EvS0TCV.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/XsEHajK.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023A.png))
 
 _Improved mouse & keyboard compatibility!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/j05uNCH.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/rVMMzRY.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023B.png))
 
 _Modified layout!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/2v75uQy.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/kobdTZJ.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionjul312023A.png))
 
 _Keeps track of selected game index a good deal more reliably!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/nSBLQBZ.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/725xcje.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionjul312023B.png))
 
 _I like to open eBooks with it...!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/ly6gkPr.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/48eY4ft.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023C.png))
 
 _Two classes of logos, for correct positioning on both Grid View and Game View!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/N30aNpE.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/KVQpuFL.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023D.png))
 
 _Title wrap on long titles in Game Details, as well as the inclusion of playTime variable-- properly formatted, even!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/gRrpwo5.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/blN4Tno.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023E.png))
 
 _Use PageUp & PageDown to navigate by letter, in both Ascending & Descending View!

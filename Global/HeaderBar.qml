@@ -163,9 +163,16 @@ id: root
                     onTextEdited: {
                         searchTerm = searchInput.text
                         reselecting = true;
+<<<<<<< HEAD
                         if (gamegrid.count <= settings.GridColumns) {
                             gamegrid.currentIndex = -1;
                             gamegrid.currentIndex = 0;
+=======
+                        if (gamegrid.count == 1) {
+                            var tempvarBeforeVideo = gamegrid.currentIndex;
+                            gamegrid.currentIndex = -1;
+                            gamegrid.currentIndex = tempvarBeforeVideo;
+>>>>>>> master
                         }
                     }
                 }
