@@ -474,7 +474,11 @@ id: root
             Timer {
     id: reindexing
 
+<<<<<<< HEAD
         interval: 250
+=======
+        interval: 500
+>>>>>>> master
         onTriggered: { reselecting = false; reindexing.stop(); }
     }
 
