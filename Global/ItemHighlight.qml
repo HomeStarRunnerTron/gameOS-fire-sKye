@@ -64,7 +64,7 @@ id: root
     
     Image {
             anchors.fill: parent
-            source: game.assets.boxFull ? game.assets.boxFull : ""
+            source: { if (game.assets.boxFull) { game.assets.boxFull; } else { "" } }
             sourceSize { width: root.width; height: root.height}
             fillMode: Image.PreserveAspectCrop
             smooth: true

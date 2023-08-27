@@ -248,7 +248,6 @@ id: root
         // Accept
         if (api.keys.isAccept(event) && !event.isAutoRepeat) {
             event.accepted = true;
-            reselecting = false;
             activated();        
         }
     }
@@ -257,7 +256,7 @@ id: root
     MouseArea {
         anchors.fill: parent
         hoverEnabled: settings.MouseHover == "Yes"
-	onEntered: {reselecting = false;}
+	onEntered: {}
 	onExited: {}
         onClicked: { if (selected) { sfxNav.play(); activated(); } else { sfxNav.play(); highlighted(); } }
     }

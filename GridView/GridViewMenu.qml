@@ -29,11 +29,6 @@ id: root
     function gameActivated() {
         storedCollectionGameIndex = gamegrid.currentIndex
         gameDetails(list.currentGame(gamegrid.currentIndex));
-        if (sortByFilter[sortByIndex] != "sortBy") {
-            reselecting = true;
-        }
-        gamegrid.currentIndex = gamegrid.currentIndex + 1;
-        gamegrid.currentIndex = gamegrid.currentIndex - 1;
     }
 
     property var sortedGames;
@@ -43,14 +38,12 @@ id: root
     
     property bool isLeftTriggerPressed: false;
     property bool isRightTriggerPressed: false;
-    property bool reselecting: true;
 
     function prevChar(c) {
         charReverse = String.fromCharCode(c);
     }
 
     function nextChar(c, modifier, order) {
-        reselecting = false;
         const firstAlpha = 97;
         const lastAlpha = 122;
         
@@ -96,7 +89,6 @@ id: root
     }
 
     function navigateToNextLetter(modifier) {
-        reselecting = false;
         if (isRightTriggerPressed || isLeftTriggerPressed) {
             return false;
         }
@@ -474,11 +466,7 @@ id: root
             Timer {
     id: reindexing
 
-<<<<<<< HEAD
-        interval: 250
-=======
-        interval: 500
->>>>>>> master
+        interval: 300
         onTriggered: { reselecting = false; reindexing.stop(); }
     }
 
@@ -513,15 +501,15 @@ id: root
                 // Mouse/touch functionality
                 MouseArea {
                     anchors.fill: parent
-                    onEntered: {reselecting = false; gamegrid.focus = true;}
-                    onExited: {reselecting = false; gamegrid.focus = true;}
-                    onClicked: {reselecting = false; gamegrid.focus = true;}
+                    onEntered: gamegrid.focus = true;
+                    onExited: gamegrid.focus = true;
+                    onClicked: gamegrid.focus = true;
                 }
             }
             
-            Keys.onDownPressed:     { sfxNav.play(); reselecting = false; moveCurrentIndexDown() }
-            Keys.onLeftPressed:     { sfxNav.play(); reselecting = false; moveCurrentIndexLeft() }
-            Keys.onRightPressed:    { sfxNav.play(); reselecting = false; moveCurrentIndexRight() }
+            Keys.onDownPressed:     { sfxNav.play(); moveCurrentIndexDown() }
+            Keys.onLeftPressed:     { sfxNav.play(); moveCurrentIndexLeft() }
+            Keys.onRightPressed:    { sfxNav.play(); moveCurrentIndexRight() }
         }
 
     }
@@ -647,39 +635,49 @@ id: root
     }
 
     onFocusChanged: {
-        if (reselecting == true && gamegrid.count > 1) {
-            gamegrid.currentIndex = -1;
-            gamegrid.currentIndex = gamegrid.currentIndex + 1;
-            gamegrid.currentIndex = gamegrid.currentIndex - 1;
-        }
         if (focus) {
             currentHelpbarModel = gridviewHelpModel;
             gamegrid.focus = true;
+            if (currentGame.title == list.currentGame(gamegrid.currentIndex).title) {
+                reselecting = false;
+            }
             if (currentGame == null) {
                 gamegrid.currentIndex = 0;
                 sortedGames = null;
-            } else if (orderBy === Qt.AscendingOrder && list.collection.games.toVarArray().findIndex(g => g === currentGame) != gamegrid.currentIndex) {
+            } else if (orderBy === Qt.AscendingOrder && list.collection.games.toVarArray().findIndex(g => g === currentGame) != gamegrid.currentIndex && sortByFilter[sortByIndex] == "sortBy" && reselecting == true) {
+                sortByIndex = 0;
+                showFavs = false;
+                searchTerm = "";
+                gamegrid.currentIndex = list.collection.games.toVarArray().findIndex(g => g === currentGame);
+            } else if (orderBy === Qt.DescendingOrder && list.collection.games.toVarArray().reverse().findIndex(g => g === currentGame) != gamegrid.currentIndex && sortByFilter[sortByIndex] == "sortBy" && reselecting == true) {
+                sortByIndex = 0;
+                showFavs = false;
+                searchTerm = "";
+                gamegrid.currentIndex = list.collection.games.toVarArray().reverse().findIndex(g => g === currentGame);
+            } else if (sortByFilter[sortByIndex] != "sortBy" && reselecting == true && orderBy === Qt.AscendingOrder) {
+                sortByIndex = 0;
+                showFavs = false;
+                searchTerm = "";
+                gamegrid.currentIndex = list.collection.games.toVarArray().findIndex(g => g === currentGame);
+            } else if (sortByFilter[sortByIndex] != "sortBy" && reselecting == true && orderBy === Qt.DescendingOrder) {
+                sortByIndex = 0;
+                showFavs = false;
+                searchTerm = "";
+                gamegrid.currentIndex = list.collection.games.toVarArray().reverse().findIndex(g => g === currentGame);
+            } else if (sortDifferent == true && orderBy === Qt.AscendingOrder) {
+                sortDifferent = false;
                 reselecting = true;
                 sortByIndex = 0;
                 showFavs = false;
-                if (currentGame.sortBy != undefined) {
-                    searchTerm = currentGame.title;
-                } else {
-                    searchTerm = currentGame.sortBy;
-                }
-                gamegrid.currentIndex = 0;
                 searchTerm = "";
-            } else if (orderBy === Qt.DescendingOrder && list.collection.games.toVarArray().reverse().findIndex(g => g === currentGame) != gamegrid.currentIndex) {
+                gamegrid.currentIndex = list.collection.games.toVarArray().findIndex(g => g === currentGame);
+            } else if (sortDifferent == true && orderBy === Qt.DescendingOrder) {
+                sortDifferent = false;
                 reselecting = true;
                 sortByIndex = 0;
                 showFavs = false;
-                if (currentGame.sortBy != undefined) {
-                    searchTerm = currentGame.title;
-                } else {
-                    searchTerm = currentGame.sortBy;
-                }
-                gamegrid.currentIndex = 0;
                 searchTerm = "";
+                gamegrid.currentIndex = list.collection.games.toVarArray().reverse().findIndex(g => g === currentGame);
             }
         }
     }

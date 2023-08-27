@@ -82,7 +82,9 @@ id: root
     property int storedHomeSecondaryIndex: 0
     property int storedCollectionIndex: 0
     property int storedCollectionGameIndex: 0
+    property int storedSortIndex: 0
     property bool reselecting: true;
+    property bool sortDifferent: false;
 
     // Reset the stored game index when changing collections
     onCurrentCollectionIndexChanged: storedCollectionGameIndex = 0
@@ -149,6 +151,13 @@ id: root
         api.memory.set('storedHomeSecondaryIndex', storedHomeSecondaryIndex);
         api.memory.set('storedCollectionIndex', currentCollectionIndex);
         api.memory.set('storedCollectionGameIndex', storedCollectionGameIndex);
+        api.memory.set('storedSortIndex', sortByIndex);
+        if (sortByIndex != 0) {
+            sortDifferent = true;
+        } else {
+            sortDifferent = false;
+        }
+        api.memory.set('sortDifferent', sortDifferent);
 
         const savedGameIndex = api.allGames.toVarArray().findIndex(g => g === game);
         api.memory.set('savedGame', savedGameIndex);
@@ -166,6 +175,8 @@ id: root
         storedHomeSecondaryIndex    = api.memory.get('storedHomeSecondaryIndex');
         currentCollectionIndex      = api.memory.get('storedCollectionIndex');
         storedCollectionGameIndex   = api.memory.get('storedCollectionGameIndex');
+        storedSortIndex = api.memory.get('storedSortIndex');
+        sortDifferent = api.memory.get('sortDifferent');
 
         currentGame                 = api.allGames.get(api.memory.get('savedGame'));
         root.state                  = api.memory.get('savedState');

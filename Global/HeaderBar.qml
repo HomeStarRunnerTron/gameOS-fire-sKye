@@ -162,17 +162,9 @@ id: root
                     text: searchTerm
                     onTextEdited: {
                         searchTerm = searchInput.text
-                        reselecting = true;
-<<<<<<< HEAD
                         if (gamegrid.count <= settings.GridColumns) {
                             gamegrid.currentIndex = -1;
                             gamegrid.currentIndex = 0;
-=======
-                        if (gamegrid.count == 1) {
-                            var tempvarBeforeVideo = gamegrid.currentIndex;
-                            gamegrid.currentIndex = -1;
-                            gamegrid.currentIndex = tempvarBeforeVideo;
->>>>>>> master
                         }
                     }
                 }
@@ -192,7 +184,7 @@ id: root
                     }
                 }
                 
-                Component.onCompleted: toggleSearch();
+                Component.onCompleted: { toggleSearch(); sortByIndex = storedSortIndex; }
 
                 Keys.onPressed: {
                     // Accept
@@ -239,13 +231,12 @@ id: root
                     onEntered: {onDownDirectionButton = true;}
                     onExited: {onDownDirectionButton = false;}
                     onClicked: {
-                        var tempIndex = gamegrid.currentIndex;
-                        gamegrid.currentIndex = 0;
                         toggleOrderBy();
                         if (sortByFilter[sortByIndex] == "sortBy") {
                             reselecting = true;
+                            gamegrid.currentIndex = (gamegrid.currentIndex - (gamegrid.count-1))*-1;
+                        } else {
                             gamegrid.currentIndex = 0;
-                            gamegrid.currentIndex = (tempIndex - (gamegrid.count-1))*-1;
                         }
                     }
                 }

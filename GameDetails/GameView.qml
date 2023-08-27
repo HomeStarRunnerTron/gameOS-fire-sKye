@@ -561,6 +561,7 @@ id: root
             }
             search: developerCollection
             onListHighlighted: { sfxNav.play(); content.currentIndex = list1.ObjectModel.index; }
+            onActivateSelected: { if (search.currentGame(currentIndex).title != currentGame.title) { reselecting = true; } else { reselecting = false; } }
         }
         
         // More by publisher
@@ -586,6 +587,7 @@ id: root
             }
             search: publisherCollection
             onListHighlighted: { sfxNav.play(); content.currentIndex = list2.ObjectModel.index; }
+            onActivateSelected: { if (search.currentGame(currentIndex).title != currentGame.title) { reselecting = true; } }
         }
         
     }
