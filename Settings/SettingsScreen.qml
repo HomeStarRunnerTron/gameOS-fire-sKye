@@ -29,7 +29,7 @@ id: root
         }*/
         ListElement {
             settingName: "Allow video thumbnails"
-            setting: "No,Yes"
+            setting: "Yes,No"
         }
         ListElement {
             settingName: "Play video thumbnail audio"
@@ -176,7 +176,7 @@ id: root
         }
         ListElement {
             settingName: "Video preview"
-            setting: "No,Yes"
+            setting: "Yes,No"
         }
         ListElement {
             settingName: "Video preview audio"
