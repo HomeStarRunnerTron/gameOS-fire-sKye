@@ -161,6 +161,7 @@ id: root
                     clip: true
                     text: searchTerm
                     onTextEdited: {
+                        reselecting = true;
                         searchTerm = searchInput.text
                         if (gamegrid.count <= settings.GridColumns) {
                             gamegrid.currentIndex = -1;
