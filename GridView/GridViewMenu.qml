@@ -548,7 +548,7 @@ id: root
             event.accepted = true;
             if (gamegrid.focus) {
                 previousScreen();
-                gamegrid.currentIndex = -1;
+                gamegrid.currentIndex = 0;
                 sortedGames = null;
                 currentGame = null;
             } else {

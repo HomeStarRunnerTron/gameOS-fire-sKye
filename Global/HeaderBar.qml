@@ -162,11 +162,12 @@ id: root
                     text: searchTerm
                     onTextEdited: {
                         reselecting = true;
-                        searchTerm = searchInput.text
                         if (gamegrid.count <= settings.GridColumns) {
+                            var tempIndex = gamegrid.currentIndex;
                             gamegrid.currentIndex = -1;
-                            gamegrid.currentIndex = 0;
+                            gamegrid.currentIndex = tempIndex;
                         }
+                        searchTerm = searchInput.text
                     }
                 }
 
