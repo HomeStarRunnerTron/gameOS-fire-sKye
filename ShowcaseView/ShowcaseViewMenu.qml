@@ -466,8 +466,20 @@ id: root
                     anchors.fill: parent
                     anchors.centerIn: parent
                     /*anchors.margins: vpx(15)*/
-                    anchors.topMargin: vpx(15)
-                    anchors.bottomMargin: vpx(15)
+                    anchors.topMargin: { switch (Utils.processPlatformName(modelData.shortName)) {
+                case "borks":
+                case "james":  
+                    return vpx(15)
+                default:
+                    return vpx(35)
+            } }
+                    anchors.bottomMargin: { switch (Utils.processPlatformName(modelData.shortName)) {
+                case "borks":
+                case "james": 
+                    return vpx(15)
+                default:
+                    return vpx(35)
+            } }
                     source: "../assets/images/logospng/" + Utils.processPlatformName(modelData.shortName) + ".png"
                     sourceSize { width: 256; height: 256 }
                     fillMode: Image.PreserveAspectFit
@@ -690,6 +702,7 @@ id: root
         snapMode: ListView.SnapOneItem
         keyNavigationWraps: true
         currentIndex: storedHomePrimaryIndex
+        interactive: false
         
         cacheBuffer: 1000
         footer: Item { height: helpMargin }

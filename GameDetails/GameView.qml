@@ -605,6 +605,7 @@ id: root
         focus: true
         spacing: vpx(30)
         header: Item { height: vpx(450) }
+        interactive: false
         
         snapMode: ListView.SnapToItem
         highlightMoveDuration: 100
