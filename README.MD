@@ -1,6 +1,6 @@
 # gameOS - Fire & sKye <br/> Current Version: v1.0
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/XsEHajK.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/0gIETFr.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023A.png))
 
 _Improved mouse & keyboard compatibility!_
