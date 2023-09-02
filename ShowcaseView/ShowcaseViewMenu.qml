@@ -16,6 +16,7 @@
 
 import QtQuick 2.3
 import QtQuick.Layouts 1.11
+import QtQuick.Window 2.15
 import SortFilterProxyModel 0.2
 import QtGraphicalEffects 1.0
 import QtMultimedia 5.9
@@ -296,7 +297,7 @@ id: root
             property bool selected: ListView.isCurrentItem
             focus: selected
             width: parent.width
-            height: if (!ftue) { vpx(650); } else { vpx(360); }
+            height: if (!ftue) { Screen.desktopAvailableHeight * 0.8; } else { vpx(360); }
             spacing: vpx(0)
             orientation: ListView.Horizontal
             clip: true
