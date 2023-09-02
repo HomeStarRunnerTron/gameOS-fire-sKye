@@ -488,6 +488,8 @@ id: root
                 if (currentIndex < numColumns) {
                     headercontainer.focus = true;
                     gamegrid.currentIndex = -1;
+                    gamegrid.currentIndex = 0;
+                    gamegrid.currentIndex = -1;
                 } else {
                     moveCurrentIndexUp();
                 }
