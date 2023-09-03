@@ -699,7 +699,6 @@ id: root
         highlightRangeMode: ListView.ApplyRange 
         preferredHighlightBegin: parent.height*0.5
         preferredHighlightEnd: parent.height*0.5
-        snapMode: ListView.SnapOneItem
         keyNavigationWraps: true
         currentIndex: storedHomePrimaryIndex
         interactive: false

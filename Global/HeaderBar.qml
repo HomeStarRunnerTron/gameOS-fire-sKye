@@ -162,10 +162,16 @@ id: root
                     text: searchTerm
                     onTextEdited: {
                         reselecting = true;
-                        if (gamegrid.count <= settings.GridColumns) {
-                            var tempIndex = gamegrid.currentIndex;
+                        var tempIndex = gamegrid.currentIndex;
+                        if (gamegrid.count <= settings.GridColumns && gamegrid.count > 0) {
                             gamegrid.currentIndex = -1;
                             gamegrid.currentIndex = tempIndex;
+                        } else {
+                            gamegrid.currentIndex = 0;
+                            gamegrid.currentIndex = tempIndex;
+                        }
+                        if (gamegrid.currentIndex > gamegrid.count || gamegrid.currentIndex < 0) {
+                            gamegrid.currentIndex = 0;
                         }
                         searchTerm = searchInput.text
                     }
@@ -233,10 +239,12 @@ id: root
                     onEntered: {onDownDirectionButton = true;}
                     onExited: {onDownDirectionButton = false;}
                     onClicked: {
-                        toggleOrderBy();
                         if (sortByFilter[sortByIndex] == "sortBy") {
-                            reselecting = true;
-                            gamegrid.currentIndex = (gamegrid.currentIndex - (gamegrid.count-1))*-1;
+                            var tempIndex = (gamegrid.currentIndex - (gamegrid.count-1))*-1;
+                                gamegrid.currentIndex = 0;
+                                toggleOrderBy();
+                                gamegrid.currentIndex = tempIndex;
+                                reselecting = true;
                         } else {
                             gamegrid.currentIndex = 0;
                         }
