@@ -202,9 +202,6 @@ id: root
                 } else if (nextIndex == gamegrid.count && modifier == +1) {
                     gamegrid.currentIndex = 0;
                     nextIndex = 0;
-                } else if (nextIndex == gamegrid.count && modifier == +1) {
-                    gamegrid.currentIndex = 0;
-                    nextIndex = 0;
                 } else if (nextIndex == gamegrid.count + 1 && modifier == -1) {
                     gamegrid.currentIndex = 0;
                     nextIndex = 0;
