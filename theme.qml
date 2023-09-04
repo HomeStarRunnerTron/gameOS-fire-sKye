@@ -152,7 +152,7 @@ id: root
         api.memory.set('storedCollectionIndex', currentCollectionIndex);
         api.memory.set('storedCollectionGameIndex', storedCollectionGameIndex);
         api.memory.set('storedSortIndex', sortByIndex);
-        if (sortByIndex != 0 || showFavs == true) {
+        if (sortByIndex != 0 || showFavs == true || reselecting == true) {
             sortDifferent = true;
         } else {
             sortDifferent = false;
