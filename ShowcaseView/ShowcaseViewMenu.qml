@@ -192,7 +192,7 @@ id: root
             width: vpx(700)
             anchors { left: parent.left; leftMargin: globalMargin }
             source: "../assets/images/gameOS-logo.png"
-            sourceSize { width: 700; height: 227}
+            sourceSize { width: 725; height: 227}
             fillMode: Image.PreserveAspectFit
             smooth: true
             asynchronous: true

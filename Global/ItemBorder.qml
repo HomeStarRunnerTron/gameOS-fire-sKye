@@ -73,14 +73,14 @@ id: root
         }
         anchors.horizontalCenter: parent.horizontalCenter
         radius: height/2
-        opacity: 0
+        opacity: { if (settings.AlwaysShowTitles === "Yes") { 1 } else { 0 } }
         Behavior on opacity { NumberAnimation { duration: 100 } }
         visible: opacity !== 0
 
         Text {
         id: bubbletitle
 
-            text: ""
+            text: { if (settings.AlwaysShowTitles === "Yes") { modelData.title } else { "" } }
             color: theme.text
             font {
                 family: subtitleFont.name
