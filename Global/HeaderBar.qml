@@ -72,7 +72,7 @@ id: root
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: { gamegrid.currentIndex = 0; previousScreen(); }
+                onClicked: { searchTerm = ""; gamegrid.currentIndex = 0; previousScreen(); }
             }
         }
 
@@ -102,7 +102,7 @@ id: root
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: { gamegrid.currentIndex = 0; previousScreen(); }
+                onClicked: { searchTerm = ""; gamegrid.currentIndex = 0; previousScreen(); }
             }
         }
 
@@ -389,7 +389,7 @@ id: root
                     anchors.fill: parent
                     onEntered: {}
                     onExited: {}
-                    onClicked: {}
+                    onClicked: {gamegrid.focus = true;}
                     z: -100
         }
         

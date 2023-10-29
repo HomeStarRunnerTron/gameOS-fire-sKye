@@ -440,6 +440,7 @@ id: root
                     }
                     onHighlighted: {
                         gamegrid.currentIndex = index;
+			gamegrid.focus = true;
                     }
                     Keys.onPressed: {
                         // Toggle favorite
@@ -546,6 +547,7 @@ id: root
         if (api.keys.isCancel(event) && !event.isAutoRepeat) {
             event.accepted = true;
             if (gamegrid.focus) {
+                searchTerm = "";
                 previousScreen();
                 gamegrid.currentIndex = 0;
                 sortedGames = null;
