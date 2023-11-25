@@ -15,7 +15,7 @@ _Modified layout!_
 
 _Keeps track of selected game index a good deal more reliably!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/725xcje.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/59r0wEP.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionjul312023B.png))
 
 _I like to open eBooks with it...!_
