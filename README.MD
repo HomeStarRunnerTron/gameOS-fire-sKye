@@ -10,7 +10,7 @@ _Improved mouse & keyboard compatibility!_
 
 _Modified layout!_
 
-![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/kobdTZJ.png)
+![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/2ryXTaw.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionjul312023A.png))
 
 _Keeps track of selected game index a good deal more reliably!_
