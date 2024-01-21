@@ -640,6 +640,8 @@ id: root
             currentHelpbarModel = gridviewHelpModel;
             gamegrid.focus = true;
             if (currentGame.title == list.currentGame(gamegrid.currentIndex).title) {
+                gamegrid.currentIndex = gamegrid.currentIndex + 1;
+                gamegrid.currentIndex = gamegrid.currentIndex - 1;
                 reselecting = false;
             }
             if (currentGame == null) {
