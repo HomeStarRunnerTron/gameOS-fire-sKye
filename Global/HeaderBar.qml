@@ -164,8 +164,7 @@ id: root
                         reselecting = true;
                         var tempIndex = gamegrid.currentIndex;
                         if (gamegrid.count <= settings.GridColumns && gamegrid.count > 0) {
-                            gamegrid.currentIndex = -1;
-                            gamegrid.currentIndex = tempIndex;
+                            firstcolumntimer.start();
                         } else {
                             gamegrid.currentIndex = 0;
                             gamegrid.currentIndex = tempIndex;
@@ -174,6 +173,18 @@ id: root
                             gamegrid.currentIndex = 0;
                         }
                         searchTerm = searchInput.text
+                    }
+                }
+
+                Timer {
+                id: firstcolumntimer
+
+                    interval: 100
+                    onTriggered: {
+                        var tempIndex = gamegrid.currentIndex;
+                        gamegrid.currentIndex = -1;
+                        gamegrid.currentIndex = tempIndex;
+                        firstcolumntimer.stop();
                     }
                 }
 
