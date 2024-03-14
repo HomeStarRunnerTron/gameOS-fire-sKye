@@ -257,6 +257,7 @@ id: root
                                 gamegrid.currentIndex = tempIndex;
                                 reselecting = true;
                         } else {
+                            toggleOrderBy();
                             gamegrid.currentIndex = 0;
                         }
                     }
