@@ -85,27 +85,38 @@ id: infocontainer
                 var hoursWord = "";
                 var minutesWord = "";
                 var timecompositeWord = "";
-                
-                if (hours == 1) {
-                    hoursWord = " hour, ";
-                } else {
-                    hoursWord = " hours, "
+
+                switch (minutes) {
+                    case 1:
+                        minutesWord = " minute";
+                        break;
+                    default:
+                        minutesWord = " minutes";
+                        break;
                 }
-                
-                if (minutes == 1) {
-                    minutesWord = " minute";
-                } else {
-                    minutesWord = " minutes"
-                }
-                
-                if (hours == 0 && minutes == 0) {
-                    timecompositeWord = minutes + minutesWord;
-                } else if (hours == 0 && minutes != 0) {
-                    timecompositeWord = minutes + minutesWord;
-                } else if (hours != 0 && minutes == 0) {
-                    timecompositeWord = hours + hoursWord;
-                } else if (hours != 0 && minutes != 0) {
-                    timecompositeWord = hours + hoursWord + minutes + minutesWord;
+
+                switch (true) {
+                    case (hours == 0):
+                        timecompositeWord = minutes + minutesWord;
+                        break;
+                    case (hours == 1 && minutes == 0):
+                        hoursWord = " hour";
+                        timecompositeWord = hours + hoursWord;
+                        break;
+                    case (hours >= 1 && minutes == 0):
+                        hoursWord = " hours";
+                        timecompositeWord = hours + hoursWord;
+                        break;
+                    case (hours == 1 && minutes != 0):
+                        hoursWord = " hour, ";
+                        timecompositeWord = hours + hoursWord + minutes + minutesWord;
+                        break;
+                    case (hours >= 1 && minutes != 0):
+                        hoursWord = " hours, ";
+                        timecompositeWord = hours + hoursWord + minutes + minutesWord;
+                        break;
+                    default:
+                        break;
                 }
                 
                 return timecompositeWord;
