@@ -92,7 +92,7 @@ id: root
 
             anchors.fill: parent
             anchors.margins: vpx(2)
-            source: modelData ? modelData.assets.screenshots[0] || modelData.assets.background || "" : ""
+            source: modelData ? modelData.assets.poster || modelData.assets.screenshots[0] || modelData.assets.background || "" : ""
             fillMode: Image.PreserveAspectCrop
             sourceSize { width: 512; height: 512 }
             smooth: true
@@ -107,7 +107,7 @@ id: root
             anchors.centerIn: parent
             anchors.margins: root.width/10
             property var logoImage: (gameData && gameData.collections.get(0).shortName === "retropie") ? gameData.assets.boxFront : (gameData.collections.get(0).shortName === "steam") ? logo(gameData) : gameData.assets.logo
-            source: modelData ? logoImage || "" : ""
+            source: modelData ? modelData.assets.poster ? "" : logoImage || "" : ""
             sourceSize { width: 400; height: 300 }
             fillMode: Image.PreserveAspectFit
             asynchronous: true
