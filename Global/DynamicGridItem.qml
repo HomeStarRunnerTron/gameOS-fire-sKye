@@ -120,6 +120,7 @@ id: root
         Rectangle {
         id: overlay
         
+            active: !modelData.assets.poster
             anchors.fill: parent
             color: screenshot.source == "" ? theme.secondary : "black"
             opacity: screenshot.source == "" ? 1 : selected ? 0.1 : 0.2
@@ -155,6 +156,7 @@ id: root
     Text {
     id: title
 
+        active: !modelData.assets.poster
         text: modelData ? modelData.title : ''
         color: theme.text
         font {
