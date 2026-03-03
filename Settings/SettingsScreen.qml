@@ -52,6 +52,10 @@ id: root
             setting: "No,Yes"
         }
         ListElement {
+            settingName: "Use posters for grid"
+            setting: "No,Yes"
+        }
+        ListElement {
             settingName: "Hide button help"
             setting: "Yes,No"
         }
