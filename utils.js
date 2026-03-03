@@ -304,6 +304,8 @@ function boxArt(data) {
     if (data.assets.boxFront.includes("/header.jpg")) 
       return steamBoxArt(data);
     else {
+      if (data.assets.boxFront != "")
+        return data.assets.boxFront;
       if (data.assets.screenshots[0] != "")
         return data.assets.screenshots[0];
     }
