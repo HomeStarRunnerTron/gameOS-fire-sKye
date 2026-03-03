@@ -306,6 +306,8 @@ function boxArt(data) {
     else {
       if (data.assets.boxFront != "")
         return data.assets.boxFront;
+      if (data.assets.poster != "")
+        return data.assets.poster;
       if (data.assets.screenshots[0] != "")
         return data.assets.screenshots[0];
     }
