@@ -49,6 +49,7 @@ id: root
             HideButtonHelp:                api.memory.has("Hide button help") ? api.memory.get("Hide button help") : "Yes",
             MouseHover:                    api.memory.has("Enable mouse hover") ? api.memory.get("Enable mouse hover") : "No",
             AlwaysShowTitles:              api.memory.has("Always show titles") ? api.memory.get("Always show titles") : "No",
+            UsePostersForGrid:             api.memory.has("Use posters for grid") ? api.memory.get("Use posters for grid") : "No",
             AnimateHighlight:              api.memory.has("Animate highlight") ? api.memory.get("Animate highlight") : "Yes",
             AllowVideoPreviewAudio:        api.memory.has("Video preview audio") ? api.memory.get("Video preview audio") : "No",
             ShowScanlines:                 api.memory.has("Show scanlines") ? api.memory.get("Show scanlines") : "No",

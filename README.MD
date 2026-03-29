@@ -1,4 +1,4 @@
-# gameOS - Fire & sKye <br/> Current Version: v1.5
+# gameOS - Fire & sKye <br/> Current Version: v1.6
 
 ![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/wmT3dAU.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023A.png))
@@ -34,7 +34,7 @@ _Title wrap on long titles in Game Details, as well as the inclusion of playTime
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023E.png))
 
 _Use PageUp & PageDown to navigate by letter, in both Ascending & Descending View!
-& [much, much mooore~](https://www.youtube.com/watch?v=l1G4ZZmNjBQ)_
+& [much, much mooore~](https://drive.google.com/file/d/1jxlR_-KP32xM5DXwARTl__zHzdFDCZbA/view?usp=sharing)_
 
 ## gameOS - Fire theme variant for Pegasus Frontend, with added modifications by HomeStarRunnerTron/Skye (skyetheguy.com)
 

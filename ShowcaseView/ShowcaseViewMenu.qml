@@ -131,7 +131,7 @@ id: root
 
         Image {
             anchors.fill: parent
-            source: if (settings.VideoPreview === "Yes") { "../assets/images/ftueBG01.png" } else { "" }
+            source: if (settings.VideoPreview === "Yes" || settings.VideoPreview === "Main menu only") { "../assets/images/ftueBG01.png" } else { "../assets/images/ftueBG02.png" }
             sourceSize { width: root.width; height: root.height}
             fillMode: Image.PreserveAspectCrop
             smooth: true
@@ -141,7 +141,7 @@ id: root
         Rectangle {
             anchors.fill: parent
             color: "black"
-            opacity: if (settings.VideoPreview === "Yes") { 0 } else { 0.5 }
+            z: -1;
         }
 
         Rectangle {
@@ -170,7 +170,7 @@ id: root
         id: videocomponent
 
             anchors.fill: parent
-            source: if (settings.VideoPreview === "Yes") { "../assets/video/ftue.mp4" } else { "" }
+            source: if (settings.VideoPreview === "Yes" || settings.VideoPreview === "Main menu only") { "../assets/video/ftue.mp4" } else { "" }
             fillMode: VideoOutput.PreserveAspectCrop
             muted: true
             loops: MediaPlayer.Infinite

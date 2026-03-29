@@ -49,6 +49,7 @@ id: root
 
     property bool selected
     property var gameData: modelData
+    property bool usePoster: settings.UsePostersForGrid === "Yes" && gameData && gameData.assets.poster != ""
 
 
     // In order to use the retropie icons here we need to do a little collection specific hack
@@ -92,7 +93,7 @@ id: root
 
             anchors.fill: parent
             anchors.margins: vpx(2)
-            source: modelData ? modelData.assets.screenshots[0] || modelData.assets.background || "" : ""
+            source: usePoster ? modelData.assets.poster : modelData ? modelData.assets.screenshots[0] || modelData.assets.background || "" : ""
             fillMode: Image.PreserveAspectCrop
             sourceSize { width: 512; height: 512 }
             smooth: true
@@ -113,6 +114,7 @@ id: root
             asynchronous: true
             smooth: true
             scale: selected ? 1.1 : 1
+            visible: !usePoster
             Behavior on scale { NumberAnimation { duration: 300 } }
             z: 10
         }
@@ -122,7 +124,7 @@ id: root
         
             anchors.fill: parent
             color: screenshot.source == "" ? theme.secondary : "black"
-            opacity: screenshot.source == "" ? 1 : selected ? 0.1 : 0.2
+            opacity: screenshot.source == "" ? 1 : usePoster ? selected ? 0 : 0.1 : selected ? 0.1 : 0.2
         }
         
         Rectangle {

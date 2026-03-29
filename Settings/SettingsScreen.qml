@@ -52,6 +52,10 @@ id: root
             setting: "No,Yes"
         }
         ListElement {
+            settingName: "Use posters for grid"
+            setting: "No,Yes"
+        }
+        ListElement {
             settingName: "Hide button help"
             setting: "Yes,No"
         }
@@ -176,7 +180,7 @@ id: root
         }
         ListElement {
             settingName: "Video preview"
-            setting: "Yes,No"
+            setting: "Yes,Main menu only,No"
         }
         ListElement {
             settingName: "Video preview audio"

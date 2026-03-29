@@ -304,7 +304,11 @@ function boxArt(data) {
     if (data.assets.boxFront.includes("/header.jpg")) 
       return steamBoxArt(data);
     else {
-      if (data.assets.screenshots[0] != "")
+      if (data.assets.boxFront != "")
+        return data.assets.boxFront;
+      else if (data.assets.poster != "")
+        return data.assets.poster;
+      else if (data.assets.screenshots[0] != "")
         return data.assets.screenshots[0];
     }
   }
