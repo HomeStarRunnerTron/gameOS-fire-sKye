@@ -132,7 +132,6 @@ id: root
         Image {
             anchors.fill: parent
             source: if (settings.VideoPreview === "Yes" || settings.VideoPreview === "Main menu only") { "../assets/images/ftueBG01.png" } else { "../assets/images/ftueBG02.png" }
-            sourceSize { width: root.width; height: root.height}
             fillMode: Image.PreserveAspectCrop
             smooth: true
             asynchronous: true

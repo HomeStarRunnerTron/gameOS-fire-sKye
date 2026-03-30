@@ -93,7 +93,7 @@ id: root
 
             anchors.fill: parent
             anchors.margins: vpx(2)
-            source: usePoster ? modelData.assets.poster : modelData ? modelData.assets.screenshots[0] || modelData.assets.background || "" : ""
+            source: usePoster ? modelData.assets.poster : modelData ? modelData.assets.screenshots[0] || modelData.assets.boxFront || modelData.assets.background || "" : ""
             fillMode: Image.PreserveAspectCrop
             sourceSize { width: 512; height: 512 }
             smooth: true
