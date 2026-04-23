@@ -23,7 +23,7 @@ _I like to open eBooks with it...!_
 ![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/48eY4ft.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023C.png))
 
-_Two classes of logos, for correct positioning on both Grid View and Game View!_
+_Two classes of logos (& cover art), for correct positioning on both Grid View and Game View!_
 
 ![gameOS Pegasus theme - Fire & sKye](https://i.imgur.com/KVQpuFL.png)
 ([click here for full-size image](https://www.skyetheguy.com/pegasuscollectionaug162023D.png))
